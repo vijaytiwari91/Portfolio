@@ -1,0 +1,297 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - Vijay's Portfolio{% endblock %}
+
+{% block content %}
+<!-- Project Hero Section -->
+<section class="project-hero bg-gradient-primary text-white py-5"
+    style="margin-top: 76px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 60vh; display: flex; align-items: center;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="project-info">
+                    <!-- Breadcrumb -->
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'portfolio:home' %}" class="text-white-50">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'portfolio:projects' %}" class="text-white-50">Projects</a>
+                            </li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">{{ project.title }}</li>
+                        </ol>
+                    </nav>
+
+                    <div class="project-badges mb-3">
+                        <span class="badge bg-primary bg-opacity-20 text-white me-2">
+                            {{ project.get_project_type_display }}
+                        </span>
+                        {% if project.is_featured %}
+                        <span class="badge bg-warning text-dark me-2">
+                            <i class="fas fa-star me-1"></i>Featured
+                        </span>
+                        {% endif %}
+                        {% if project.is_active %}
+                        <span class="badge bg-success me-2">Active</span>
+                        {% endif %}
+                    </div>
+
+                    <h1 class="display-5 fw-bold mb-4" data-aos="fade-up">{{ project.title }}</h1>
+                    <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                        {{ project.short_description }}
+                    </p>
+
+                    <div class="project-links" data-aos="fade-up" data-aos-delay="200">
+                        {% if project.live_url %}
+                        <a href="{{ project.live_url }}" target="_blank" class="btn btn-light btn-lg me-3 mb-2">
+                            <i class="fas fa-external-link-alt me-2"></i>Live Demo
+                        </a>
+                        {% endif %}
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-light btn-lg mb-2">
+                            <i class="fab fa-github me-2"></i>View Code
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded-3 shadow-lg"
+                    data-aos="fade-left" data-aos-delay="300" style="max-width: 500px; width: 100%;">
+                {% else %}
+                <div class="project-placeholder bg-white bg-opacity-20 rounded-3 mx-auto d-flex align-items-center justify-content-center"
+                    style="width: 400px; height: 300px;" data-aos="fade-left" data-aos-delay="300">
+                    <i class="fas fa-project-diagram fa-6x text-white"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="project-details py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Project Overview -->
+                <div class="project-overview mb-5" data-aos="fade-up">
+                    <h2 class="h3 fw-bold mb-4">Project Overview</h2>
+                    <div class="content">
+                        {{ project.description|linebreaks }}
+                    </div>
+                </div>
+
+                <!-- Features -->
+                {% if project.features %}
+                <div class="project-features mb-5" data-aos="fade-up" data-aos-delay="100">
+                    <h2 class="h3 fw-bold mb-4">Key Features</h2>
+                    <div class="features-list">
+                        {{ project.features|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Challenges -->
+                {% if project.challenges_faced %}
+                <div class="project-challenges mb-5" data-aos="fade-up" data-aos-delay="200">
+                    <h2 class="h3 fw-bold mb-4">Challenges & Solutions</h2>
+                    <div class="challenges-content">
+                        {{ project.challenges_faced|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Lessons Learned -->
+                {% if project.lessons_learned %}
+                <div class="project-lessons mb-5" data-aos="fade-up" data-aos-delay="300">
+                    <h2 class="h3 fw-bold mb-4">Lessons Learned</h2>
+                    <div class="lessons-content">
+                        {{ project.lessons_learned|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Project Gallery -->
+                {% if project.gallery_images.all %}
+                <div class="project-gallery mb-5" data-aos="fade-up" data-aos-delay="400">
+                    <h2 class="h3 fw-bold mb-4">Project Gallery</h2>
+                    <div class="row g-3">
+                        {% for image in project.gallery_images.all %}
+                        <div class="col-md-6">
+                            <img src="{{ image.image.url }}" alt="{{ image.caption }}"
+                                class="img-fluid rounded-3 shadow-sm" data-bs-toggle="modal"
+                                data-bs-target="#imageModal{{ forloop.counter }}" style="cursor: pointer;">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="project-sidebar">
+                    <!-- Project Info -->
+                    <div class="project-info-card bg-light rounded-3 p-4 mb-4" data-aos="fade-left">
+                        <h3 class="h4 fw-bold mb-4">Project Information</h3>
+
+                        <div class="info-item mb-3">
+                            <h6 class="fw-semibold text-primary mb-1">Project Type</h6>
+                            <p class="mb-0">{{ project.get_project_type_display }}</p>
+                        </div>
+
+                        {% if project.client %}
+                        <div class="info-item mb-3">
+                            <h6 class="fw-semibold text-primary mb-1">Client</h6>
+                            <p class="mb-0">{{ project.client }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if project.start_date %}
+                        <div class="info-item mb-3">
+                            <h6 class="fw-semibold text-primary mb-1">Start Date</h6>
+                            <p class="mb-0">{{ project.start_date|date:"F Y" }}</p>
+                        </div>
+                        {% endif %}
+
+                        {% if project.end_date %}
+                        <div class="info-item mb-3">
+                            <h6 class="fw-semibold text-primary mb-1">Completion Date</h6>
+                            <p class="mb-0">{{ project.end_date|date:"F Y" }}</p>
+                        </div>
+                        {% else %}
+                        <div class="info-item mb-3">
+                            <h6 class="fw-semibold text-primary mb-1">Status</h6>
+                            <p class="mb-0 text-success">
+                                <i class="fas fa-circle text-success me-1" style="font-size: 0.5rem;"></i>
+                                Ongoing
+                            </p>
+                        </div>
+                        {% endif %}
+
+                        <!-- Project Links -->
+                        <div class="project-links mt-4">
+                            {% if project.live_url %}
+                            <a href="{{ project.live_url }}" target="_blank" class="btn btn-primary w-100 mb-2">
+                                <i class="fas fa-external-link-alt me-2"></i>View Live Project
+                            </a>
+                            {% endif %}
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark w-100 mb-2">
+                                <i class="fab fa-github me-2"></i>View Source Code
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Technologies Used -->
+                    {% if project.technologies.all %}
+                    <div class="technologies-card bg-light rounded-3 p-4 mb-4" data-aos="fade-left"
+                        data-aos-delay="100">
+                        <h3 class="h4 fw-bold mb-4">Technologies Used</h3>
+                        <div class="technologies-list">
+                            {% for tech in project.technologies.all %}
+                            <span class="badge bg-primary me-2 mb-2 p-2">
+                                {% if tech.icon %}
+                                <i class="{{ tech.icon }} me-1"></i>
+                                {% endif %}
+                                {{ tech.name }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Related Projects -->
+                    {% if related_projects %}
+                    <div class="related-projects-card bg-light rounded-3 p-4" data-aos="fade-left" data-aos-delay="200">
+                        <h3 class="h4 fw-bold mb-4">Related Projects</h3>
+                        {% for related in related_projects %}
+                        <div class="related-project mb-3 pb-3 border-bottom">
+                            <h6 class="fw-semibold mb-1">
+                                <a href="{% url 'portfolio:project_detail' related.slug %}"
+                                    class="text-decoration-none">{{ related.title }}</a>
+                            </h6>
+                            <p class="text-muted small mb-0">{{ related.short_description|truncatewords:15 }}</p>
+                        </div>
+                        {% endfor %}
+                        <a href="{% url 'portfolio:projects' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-folder-open me-1"></i>View All Projects
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Modals -->
+{% if project.gallery_images.all %}
+{% for image in project.gallery_images.all %}
+<div class="modal fade" id="imageModal{{ forloop.counter }}" tabindex="-1"
+    aria-labelledby="imageModalLabel{{ forloop.counter }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel{{ forloop.counter }}">{{ image.caption }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<!-- Navigation -->
+<section class="project-navigation py-4 bg-light border-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% if previous_project %}
+                <a href="{% url 'portfolio:project_detail' previous_project.slug %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>{{ previous_project.title }}
+                </a>
+                {% endif %}
+            </div>
+            <div class="col-md-6 text-md-end">
+                {% if next_project %}
+                <a href="{% url 'portfolio:project_detail' next_project.slug %}" class="btn btn-outline-primary">
+                    {{ next_project.title }}<i class="fas fa-arrow-right ms-2"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="h3 fw-bold mb-4" data-aos="fade-up">Like What You See?</h2>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    Let's discuss how I can help bring your project ideas to life.
+                </p>
+                <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-light btn-lg me-3 mb-2">
+                        <i class="fas fa-envelope me-2"></i>Start a Project
+                    </a>
+                    <a href="{% url 'portfolio:projects' %}" class="btn btn-outline-light btn-lg mb-2">
+                        <i class="fas fa-folder-open me-2"></i>View More Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
