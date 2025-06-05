@@ -5,7 +5,6 @@
 
 {% block content %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -134,115 +133,58 @@
             <h2 class="h3 fw-bold mb-4 text-center" data-aos="fade-up">Professional Experience</h2>
 
             <div class="timeline position-relative">
-                <!-- TMI Group -->
-                <div class="timeline-item left" data-aos="fade-up" data-aos-delay="100">
+                {% for experience in experiences %}
+                <div class="timeline-item {% cycle 'left' 'right' %}" data-aos="fade-up"
+                    data-aos-delay="{% if forloop.counter == 1 %}100{% elif forloop.counter == 2 %}200{% elif forloop.counter == 3 %}300{% elif forloop.counter == 4 %}400{% else %}500{% endif %}">
                     <div class="timeline-card card shadow-sm">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="h5 fw-bold mb-0 text-primary">Data Analyst</h3>
+                                <h3 class="h5 fw-bold mb-0 text-primary">{{ experience.position }} at {{ experience.company_name }}</h3>
+                                {% if experience.is_current %}
                                 <span class="badge bg-success">Current</span>
+                                {% endif %}
                             </div>
                             <h4 class="h6 mb-3">
-                                <a href="https://tmigroup.in/" target="_blank" class="text-decoration-none">
-                                    TMI Group <i class="fas fa-external-link-alt fa-xs"></i>
+                                {% if experience.company_website %}
+                                <a href="{{ experience.company_website }}" target="_blank" class="text-decoration-none">
+                                    {{ experience.company }} <i class="fas fa-external-link-alt fa-xs"></i>
                                 </a>
-                                <span class="text-muted"> • Hyderabad, India</span>
+                                {% else %}
+                                {{ experience.company }}
+                                {% endif %}
+                                {% if experience.location %}
+                                <span class="text-muted"> • {{ experience.location }}</span>
+                                {% endif %}
                             </h4>
                             <p class="timeline-date mb-3">
-                                <i class="far fa-calendar-alt me-1"></i> Oct 2024 - Present
+                                <i class="far fa-calendar-alt me-1"></i>
+                                {{ experience.start_date|date:"M Y" }} -
+                                {% if experience.end_date %}
+                                {{ experience.end_date|date:"M Y" }}
+                                {% else %}
+                                Present
+                                {% endif %}
                             </p>
                             <div class="mb-3">
-                                <p>Responsible for building visually appealing dashboards using PowerBi, Maintaining all
-                                    the necessary data in Excel and creating summaries and reports.</p>
+                                {% if experience.description %}
+                                {{ experience.description|linebreaks }}
+                                {% endif %}
                             </div>
+                            {% if experience.technologies %}
                             <div class="tech-tags">
-                                <span class="badge bg-light text-dark me-1 mb-1">Power BI</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">Dashboard Development</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">MS Excel</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">Data Visualization</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">Statistical Analysis</span>
+                                {% for tech in experience.technologies.all %}
+                                <span class="badge bg-light text-dark me-1 mb-1">{{ tech.name }}</span>
+                                {% endfor %}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
-                <!-- Referenceglobe -->
-                <div class="timeline-item right" data-aos="fade-up" data-aos-delay="200">
-                    <div class="timeline-card card shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="h5 fw-bold mb-0 text-primary">Data Analyst</h3>
-                            </div>
-                            <h4 class="h6 mb-3">
-                                Referenceglobe
-                                <span class="text-muted"> • India</span>
-                            </h4>
-                            <p class="timeline-date mb-3">
-                                <i class="far fa-calendar-alt me-1"></i> Feb 2024 - Sep 2024
-                            </p>
-                            <div class="mb-3">
-                                <p>• Conducted data cleaning and preprocessing using MySQL queries and Excel</p>
-                                <p>• Performed quality analysis of system products to ensure they meet high standards
-                                    and requirements</p>
-                                <p>• Assisted the development team in performing system health checks and verifying
-                                    system functionality</p>
-                                <p>• Provided effective technical support and troubleshooting, resolving issues promptly
-                                    to maintain smooth CRM operations</p>
-                                <p>• Delivered product demos to Heads of Departments (HODs), faculty, and Training and
-                                    Placement Officers (TPOs)</p>
-                                <p>• Gathered client requirements and coordinated with the development team to ensure
-                                    needs are understood and addressed</p>
-                                <p>• Used Excel to clean and prepare data before uploading it into the system</p>
-                                <p>• Provided reports and visualizations through dashboards when additional insights or
-                                    metrics were required</p>
-                                <p>• Contributed to company efficiency through streamlined data management, improved
-                                    system functionality, and enhanced user satisfaction</p>
-                            </div>
-                            <div class="tech-tags">
-                                <span class="badge bg-light text-dark me-1 mb-1">MySQL</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">Power BI</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">MS Excel</span>
-                            </div>
-                        </div>
-                    </div>
+                {% empty %}
+                <div class="text-center">
+                    <p class="text-muted">No work experience data available.</p>
                 </div>
-
-                <!-- Skill Lync -->
-                <div class="timeline-item left" data-aos="fade-up" data-aos-delay="300">
-                    <div class="timeline-card card shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="h5 fw-bold mb-0 text-primary">Data Analyst Intern</h3>
-                            </div>
-                            <h4 class="h6 mb-3">
-                                Skill Lync
-                                <span class="text-muted"> • Chennai, India</span>
-                            </h4>
-                            <p class="timeline-date mb-3">
-                                <i class="far fa-calendar-alt me-1"></i> Sep 2023 - Nov 2023
-                            </p>
-                            <div class="mb-3">
-                                <p>• Conducted research, analysis, and preparation of project reports for retail
-                                    e-commerce projects</p>
-                                <p>• Analyzed retail sales data transactions of e-commerce company with comprehensive
-                                    data analysis</p>
-                                <p>• Delivered interactive reports and dashboards for monitoring KPIs including
-                                    Products, Orders, Sales, Profit, Quantity, Loss</p>
-                                <p>• Created visualizations on Weekly, Monthly, Quarterly, and Yearly basis for business
-                                    insights</p>
-                                <p>• Successfully completed certification program in Data Analyst and Data Science
-                                    internship</p>
-                                <p>• Gained hands-on experience with real-world data analysis projects and industry best
-                                    practices</p>
-                            </div>
-                            <div class="tech-tags">
-                                <span class="badge bg-light text-dark me-1 mb-1">Tableau</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">MS Excel</span>
-                                <span class="badge bg-light text-dark me-1 mb-1">Python</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -253,244 +195,53 @@
             <h2 class="h3 fw-bold mb-4 text-center" data-aos="fade-up">Education</h2>
 
             <div class="row row-cols-1 row-cols-md-2 g-4">
-                <!-- Swami Vivekanand University -->
-                <div class="col" data-aos="fade-up" data-aos-delay="100">
+                {% for edu in education %}
+                <div class="col" data-aos="fade-up"
+                    data-aos-delay="{% if forloop.counter == 1 %}100{% elif forloop.counter == 2 %}200{% elif forloop.counter == 3 %}300{% else %}400{% endif %}">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start">
-                                <h3 class="h5 fw-bold mb-0">Bachelor of Computer Science Engineering in Computer Science
-                                    Engineering</h3>
+                                <h3 class="h5 fw-bold mb-0">{{ edu.degree }}</h3>
                             </div>
                             <h4 class="h6 mb-3">
-                                Swami Vivekanand University
-                                <span class="text-muted"> • India</span>
+                                {{ edu.institution }}
+                                {% if edu.location %}
+                                <span class="text-muted"> • {{ edu.location }}</span>
+                                {% endif %}
                             </h4>
                             <p class="mb-3">
-                                <i class="far fa-calendar-alt me-1"></i> Jun 2019 - May 2023
+                                <i class="far fa-calendar-alt me-1"></i>
+                                {{ edu.start_date|date:"M Y" }} - {{ edu.end_date|date:"M Y" }}
                             </p>
+                            {% if edu.description %}
                             <div class="mb-3">
-                                <p>Comprehensive study of computer science fundamentals, programming, data structures,
-                                    algorithms, and software engineering principles.</p>
+                                <p>{{ edu.description }}</p>
                             </div>
-                            <p class="mb-2"><strong>GPA:</strong> 78%</p>
+                            {% endif %}
+                            {% if edu.gpa %}
+                            <p class="mb-2"><strong>GPA:</strong> {{ edu.gpa }}</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-
-                <!-- Govt Nehru High Secondary School -->
-                <div class="col" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <h3 class="h5 fw-bold mb-0">Intermediate – 12th Standard in Science</h3>
-                            </div>
-                            <h4 class="h6 mb-3">
-                                Govt Nehru High Secondary School
-                                <span class="text-muted"> • India</span>
-                            </h4>
-                            <p class="mb-3">
-                                <i class="far fa-calendar-alt me-1"></i> Jun 2018 - Mar 2019
-                            </p>
-                            <div class="mb-3">
-                                <p>Higher Secondary Education with focus on Science subjects.</p>
-                            </div>
-                            <p class="mb-2"><strong>GPA:</strong> 70%</p>
-                        </div>
-                    </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">No education data available.</p>
                 </div>
-
-                <!-- Govt Chandan Devi High School -->
-                <div class="col" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <h3 class="h5 fw-bold mb-0">SSLC – 10th Standard in General</h3>
-                            </div>
-                            <h4 class="h6 mb-3">
-                                Govt Chandan Devi High School
-                                <span class="text-muted"> • India</span>
-                            </h4>
-                            <p class="mb-3">
-                                <i class="far fa-calendar-alt me-1"></i> Jun 2017 - Mar 2018
-                            </p>
-                            <div class="mb-3">
-                                <p>Secondary School Leaving Certificate.</p>
-                            </div>
-                            <p class="mb-2"><strong>GPA:</strong> 72%</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- Skills Section - These would typically be pulled from the database too -->
-    <section class="skills-summary py-5">
-        <div class="container">
-            <h2 class="h3 fw-bold mb-4 text-center" data-aos="fade-up">Skills & Expertise</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-                <!-- Programming -->
-                <div class="col" data-aos="fade-up">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="icon-box bg-primary bg-opacity-10 me-3 p-3 rounded">
-                                    <i class="fas fa-code text-primary"></i>
-                                </div>
-                                <h3 class="h5 fw-bold mb-0">Programming</h3>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fab fa-python text-success me-2"></i>
-                                    Python
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-chart-line text-success me-2"></i>
-                                    Pandas
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-calculator text-success me-2"></i>
-                                    NumPy
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-chart-bar text-success me-2"></i>
-                                    Matplotlib
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-chart-area text-success me-2"></i>
-                                    Seaborn
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Frontend/Visualization -->
-                <div class="col" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="icon-box bg-success bg-opacity-10 me-3 p-3 rounded">
-                                    <i class="fas fa-laptop-code text-success"></i>
-                                </div>
-                                <h3 class="h5 fw-bold mb-0">Data Visualization</h3>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fas fa-chart-pie text-success me-2"></i>
-                                    Tableau
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-chart-line text-success me-2"></i>
-                                    Power BI
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-chart-bar text-success me-2"></i>
-                                    Data Visualization
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-tachometer-alt text-success me-2"></i>
-                                    Dashboard Development
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Database -->
-                <div class="col" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="icon-box bg-info bg-opacity-10 me-3 p-3 rounded">
-                                    <i class="fas fa-database text-info"></i>
-                                </div>
-                                <h3 class="h5 fw-bold mb-0">Database</h3>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fas fa-database text-success me-2"></i>
-                                    MySQL
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-server text-success me-2"></i>
-                                    SQL Server
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-database text-success me-2"></i>
-                                    SQLite3
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
-                <!-- Microsoft -->
-                <div class="col" data-aos="fade-up">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="icon-box bg-secondary bg-opacity-10 me-3 p-3 rounded">
-                                    <i class="fab fa-microsoft text-secondary"></i>
-                                </div>
-                                <h3 class="h5 fw-bold mb-0">Microsoft</h3>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fas fa-file-excel text-success me-2"></i>
-                                    MS Excel
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-code text-success me-2"></i>
-                                    VBA Macro
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Data Analysis -->
-                <div class="col" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="icon-box bg-warning bg-opacity-10 me-3 p-3 rounded">
-                                    <i class="fas fa-chart-line text-warning"></i>
-                                </div>
-                                <h3 class="h5 fw-bold mb-0">Analysis Skills</h3>
-                            </div>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fas fa-broom text-success me-2"></i>
-                                    Data Cleaning
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-project-diagram text-success me-2"></i>
-                                    Data Modeling
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-calculator text-success me-2"></i>
-                                    Statistical Analysis
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-exchange-alt text-success me-2"></i>
-                                    ETL Processes
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Link to Resume & Contact -->
-            <div class="text-center mt-5">
-                <a href="/contact/" class="btn btn-primary btn-lg">
-                    <i class="far fa-paper-plane me-2"></i>Contact Me
-                </a>
-            </div>
-        </div>
+    <!-- Link to Resume & Contact -->
+    <div class="text-center mt-5">
+        <a href="/contact/" class="btn btn-primary btn-lg">
+            <i class="far fa-paper-plane me-2"></i>Contact Me
+        </a>
+    </div>
+    </div>
     </section>
 
     <!-- Footer would be here in the full template -->

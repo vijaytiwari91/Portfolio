@@ -23,11 +23,7 @@
                             <li class="breadcrumb-item active text-white" aria-current="page">{{ project.title }}</li>
                         </ol>
                     </nav>
-
                     <div class="project-badges mb-3">
-                        <span class="badge bg-primary bg-opacity-20 text-white me-2">
-                            {{ project.get_project_type_display }}
-                        </span>
                         {% if project.is_featured %}
                         <span class="badge bg-warning text-dark me-2">
                             <i class="fas fa-star me-1"></i>Featured
@@ -138,12 +134,7 @@
                 <div class="project-sidebar">
                     <!-- Project Info -->
                     <div class="project-info-card bg-light rounded-3 p-4 mb-4" data-aos="fade-left">
-                        <h3 class="h4 fw-bold mb-4">Project Information</h3>
-
-                        <div class="info-item mb-3">
-                            <h6 class="fw-semibold text-primary mb-1">Project Type</h6>
-                            <p class="mb-0">{{ project.get_project_type_display }}</p>
-                        </div>
+                        <h3 class="h4 fw-bold mb-4">Project Information</h3> <!-- Project Type removed -->
 
                         {% if project.client %}
                         <div class="info-item mb-3">
@@ -205,12 +196,10 @@
                             {% endfor %}
                         </div>
                     </div>
-                    {% endif %}
-
-                    <!-- Related Projects -->
+                    {% endif %} <!-- Other Projects -->
                     {% if related_projects %}
                     <div class="related-projects-card bg-light rounded-3 p-4" data-aos="fade-left" data-aos-delay="200">
-                        <h3 class="h4 fw-bold mb-4">Related Projects</h3>
+                        <h3 class="h4 fw-bold mb-4">Other Projects</h3>
                         {% for related in related_projects %}
                         <div class="related-project mb-3 pb-3 border-bottom">
                             <h6 class="fw-semibold mb-1">

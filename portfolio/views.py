@@ -38,38 +38,38 @@ def home(request):
     }
     return render(request, 'portfolio/home.html', context)
 
+# Your view function
 def projects(request):
-    """Projects listing page"""
-    project_list = Project.objects.filter(is_published=True)
+    """
+    Display all published portfolio projects.
     
-    # Filter by project type
-    project_type = request.GET.get('type')
-    if project_type:
-        project_list = project_list.filter(project_type=project_type)
+    This view:
+    1. Fetches only published projects from the database
+    2. Orders them by the 'order' field, then by creation date (newest first)
+    3. Passes the data to the template
+    """
     
-    # Search functionality
-    search_query = request.GET.get('q')
-    if search_query:
-        project_list = project_list.filter(
-            Q(title__icontains=search_query) |
-            Q(description__icontains=search_query) |
-            Q(short_description__icontains=search_query)
-        )
+    # Get only published projects, ordered by custom order then by creation date
+    portfolio_projects = Project.objects.filter(
+        is_published=True
+    ).order_by('order', '-created_at')
     
-    # Pagination
-    paginator = Paginator(project_list, 9)  # 9 projects per page
-    page_number = request.GET.get('page')
-    projects_page = paginator.get_page(page_number)
+    # You can also add filtering for featured projects if needed
+    featured_projects = portfolio_projects.filter(is_featured=True)
     
-    # Get project types for filter
-    project_types = Project.PROJECT_TYPES
+    # Get unique project types for any filtering you might want to add later
+    project_types = Project.objects.filter(
+        is_published=True
+    ).values_list('project_type', flat=True).distinct()
     
     context = {
-        'projects': projects_page,
+        'projects': portfolio_projects,
+        'featured_projects': featured_projects,
         'project_types': project_types,
-        'current_type': project_type,
-        'search_query': search_query,
+        # Note: all_technologies removed since your table doesn't have this relationship
+        # You'll need to create a separate technology table if you want this feature
     }
+    
     return render(request, 'portfolio/projects.html', context)
 
 def project_detail(request, slug):
@@ -122,12 +122,27 @@ def experience(request):
 
 def contact(request):
     """Contact page with form"""
+    import time
+    from django.db import transaction, connections
+    
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Thank you! Your message has been sent successfully.')
-            return redirect('portfolio:contact')
+            try:
+                # Use a transaction with a timeout to prevent database locks
+                with transaction.atomic():
+                    contact_msg = form.save(commit=False)
+                    contact_msg.save()
+                    
+                    # Close database connections to release locks
+                    for conn in connections.all():
+                        conn.close()
+                        
+                    messages.success(request, 'Thank you! Your message has been sent successfully.')
+                    return redirect('portfolio:contact')
+            except Exception as e:
+                # If there's a database error, show an error message
+                messages.error(request, f'Sorry, we could not send your message. Please try again later.')
     else:
         form = ContactForm()
     
@@ -136,9 +151,30 @@ def contact(request):
     except AboutSection.DoesNotExist:
         about = None
     
+    # Add hardcoded FAQs until a model is created
+    faqs = [
+        {
+            'question': 'What services do you offer?',
+            'answer': 'I specialize in full-stack web development, data analysis, and machine learning solutions. My services include custom web application development, data visualization, predictive modeling, and technical consulting.'
+        },
+        {
+            'question': 'How much do your services cost?',
+            'answer': 'Project costs vary based on complexity, timeline, and specific requirements. I offer competitive rates and would be happy to provide a detailed quote after discussing your project needs.'
+        },        
+        {
+            'question': 'What is your typical project timeline?',
+            'answer': 'Timeline depends on project scope and complexity. Small websites typically take 2-4 weeks, while complex web applications may take 2-6 months. I\'ll provide a detailed timeline during our initial consultation.'
+        },
+        {
+            'question': 'Do you offer ongoing maintenance and support?',
+            'answer': 'Yes, I offer maintenance packages and ongoing support for all completed projects. This ensures your application remains secure, up-to-date, and functioning optimally.'
+        },
+    ]
+    
     context = {
         'form': form,
         'about': about,
+        'faqs': faqs,
     }
     return render(request, 'portfolio/contact.html', context)
 

@@ -1,0 +1,241 @@
+{% extends 'portfolio/base.html' %}
+<!-- {% if pro.demo_url %}
+<a href="{{ pro.demo_url }}" target="_blank" class="btn btn-outline-success btn-sm me-2 mb-2">
+    <i class="fas fa-play me-1"></i>Demo
+</a>
+{% endif %} -->
+{% load static %}
+
+{% block title %}Projects - Vijay's Portfolio{% endblock %}
+
+{% block content %}
+<!-- Projects Hero Section -->
+<section class="projects-hero bg-gradient-primary text-white py-5"
+    style="margin-top: 76px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 50vh; display: flex; align-items: center;">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">My Projects</h1>
+                <p class="lead mb-0" data-aos="fade-up" data-aos-delay="100">
+                    A showcase of my work, featuring web applications, tools, and creative solutions
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="projects-grid py-5">
+    <div class="container">
+        {% if projects %}
+        <div class="row g-4" id="projects-container">
+            {% for pro in projects %}
+            <div class="col-lg-4 col-md-6 project-item" data-aos="fade-up"
+                data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <div class="project-card bg-white rounded-3 shadow-sm overflow-hidden h-100 position-relative">
+                    <!-- Project Image -->
+                    <div class="project-image position-relative">
+                        {% if pro.image %}
+                        <img src="{{ pro.image.url }}" alt="{{ pro.title }}" class="img-fluid w-100"
+                            style="height: 250px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
+                            style="height: 250px;">
+                            <i class="fas fa-project-diagram fa-4x text-primary"></i>
+                        </div>
+                        {% endif %}
+
+                        <!-- Overlay -->
+                        <div
+                            class="project-overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center opacity-0 transition-opacity">
+                            <div class="overlay-content text-center">
+                                <a href="{% url 'portfolio:project_detail' pro.slug %}"
+                                    class="btn btn-light btn-sm me-2 mb-2">
+                                    <i class="fas fa-eye me-1"></i>Details
+                                </a>
+                                {% if pro.live_url %}
+                                <a href="{{ pro.live_url }}" target="_blank" class="btn btn-primary btn-sm me-2 mb-2">
+                                    <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                </a>
+                                {% endif %}
+                                {% if pro.github_url %}
+                                <a href="{{ pro.github_url }}" target="_blank" class="btn btn-dark btn-sm mb-2">
+                                    <i class="fab fa-github me-1"></i>Code
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Featured Badge -->
+                        {% if pro.is_featured %}
+                        <div class="position-absolute top-0 start-0 m-3">
+                            <span class="badge bg-warning text-dark">
+                                <i class="fas fa-star me-1"></i>Featured
+                            </span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Project Type Badge -->
+                        {% if pro.project_type %}
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-info text-white">
+                                {{ pro.project_type|title }}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Project Content -->
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title fw-semibold mb-0">{{ pro.title }}</h5>
+                            {% if pro.is_published %}
+                            <span class="badge bg-success small">Published</span>
+                            {% endif %}
+                        </div>
+
+                        <p class="card-text text-muted mb-3">{{ pro.short_description }}</p>
+
+                        <!-- Technologies Used -->
+                        {% comment %}
+                        Note: Technologies section removed as portfolio_project table
+                        doesn't have a direct relationship with technologies.
+                        You'll need to create a separate table for project-technology relationships.
+                        {% endcomment %}
+
+                        <!-- Project Stats -->
+                        <div class="project-stats mb-3">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Created</small>
+                                    <small class="fw-semibold">{{ pro.created_at|date:"M Y" }}</small>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted d-block">Updated</small>
+                                    <small class="fw-semibold">{{ pro.updated_at|date:"M Y" }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="project-actions d-flex flex-wrap gap-2">
+                            <a href="{% url 'portfolio:project_detail' pro.slug %}"
+                                class="btn btn-primary btn-sm flex-fill">
+                                <i class="fas fa-info-circle me-1"></i>Learn More
+                            </a>
+                            {% if pro.live_url %}
+                            <a href="{{ pro.live_url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            {% endif %}
+                            {% if pro.github_url %}
+                            <a href="{{ pro.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                            {% if pro.demo_url %}
+                            <a href="{{ pro.demo_url }}" target="_blank" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-play"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- No Projects Message -->
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <div class="no-projects">
+                    <i class="fas fa-folder-open fa-5x text-muted mb-4"></i>
+                    <h3 class="text-muted">No Projects Yet</h3>
+                    <p class="text-muted">Projects will be displayed here once they are added.</p>
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-primary">
+                        <i class="fas fa-envelope me-2"></i>Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Skills Used Section -->
+{% if all_technologies %}
+<section class="technologies-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="h3 fw-bold" data-aos="fade-up">Technologies I Use</h2>
+                <p class="text-muted" data-aos="fade-up" data-aos-delay="100">
+                    A collection of tools and technologies featured in my projects
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="technologies-cloud text-center" data-aos="fade-up" data-aos-delay="200">
+                    {% for tech in all_technologies %}
+                    <span class="badge bg-primary me-2 mb-2 p-2">
+                        {% if tech.icon %}
+                        <i class="{{ tech.icon }} me-1"></i>
+                        {% endif %}
+                        {{ tech.name }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="h3 fw-bold mb-4" data-aos="fade-up">Interested in Working Together?</h2>
+                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                    I'm always open to discussing new opportunities and exciting projects.
+                </p>
+                <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-light btn-lg mb-2">
+                        <i class="fas fa-envelope me-2"></i>Start a Conversation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const projectItems = document.querySelectorAll('.project-item');
+
+        // Project card hover effect
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            const overlay = card.querySelector('.project-overlay');
+
+            card.addEventListener('mouseenter', function () {
+                if (overlay) {
+                    overlay.classList.remove('opacity-0');
+                    overlay.classList.add('opacity-100');
+                }
+            });
+
+            card.addEventListener('mouseleave', function () {
+                if (overlay) {
+                    overlay.classList.remove('opacity-100');
+                    overlay.classList.add('opacity-0');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

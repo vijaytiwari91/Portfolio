@@ -6,12 +6,12 @@
 {% block content %}
 <!-- Contact Hero Section -->
 <section class="contact-hero bg-gradient-primary text-white py-5"
-    style="margin-top: 76px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 50vh; display: flex; align-items: center;">
+    style="margin-top: 76px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 30vh; display: flex; align-items: center;">
     <div class="container">
         <div class="row text-center">
             <div class="col-lg-8 mx-auto">
-                <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Get In Touch</h1>
-                <p class="lead mb-0" data-aos="fade-up" data-aos-delay="100">
+                <h1 class="display-4 fw-bold mb-4">Get In Touch</h1>
+                <p class="lead mb-0">
                     Ready to start your next project? I'd love to hear from you and discuss how we can work together.
                 </p>
             </div>
@@ -20,16 +20,16 @@
 </section>
 
 <!-- Contact Form & Info Section -->
-<section class="contact-section py-5">
+<section class="contact-section py-5" id="contact-form">
     <div class="container">
         <div class="row g-5">
             <!-- Contact Form -->
             <div class="col-lg-8">
-                <div class="contact-form-wrapper" data-aos="fade-right">
+                <div class="contact-form-wrapper bg-white p-4 rounded shadow-sm">
                     <h2 class="h3 fw-bold mb-4">Send Me a Message</h2>
                     <p class="text-muted mb-4">
-                        Fill out the form below and I'll get back to you as soon as possible.
-                        Whether you have a project idea, question, or just want to say hello, I'd love to hear from you!
+                        Fill out the form below and I'll get back to you as soon as possible. Whether you have a project
+                        idea, question, or just want to say hello, I'd love to hear from you!
                     </p>
 
                     {% if messages %}
@@ -39,202 +39,99 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     {% endfor %}
-                    {% endif %}
-
-                    <form method="post" class="contact-form">
+                    {% endif %} <form method="post" class="contact-form">
                         {% csrf_token %}
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="{{ form.name.id_for_label }}" class="form-label fw-semibold">
-                                    Full Name <span class="text-danger">*</span>
-                                </label>
-                                {{ form.name }}
-                                {% if form.name.errors %}
-                                <div class="text-danger mt-1">
-                                    {% for error in form.name.errors %}
-                                    <small>{{ error }}</small>
-                                    {% endfor %}
+                                <div class="mb-3">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">Your Name</label>
+                                    {{ form.name }}
                                 </div>
-                                {% endif %}
                             </div>
                             <div class="col-md-6">
-                                <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold">
-                                    Email Address <span class="text-danger">*</span>
-                                </label>
-                                {{ form.email }}
-                                {% if form.email.errors %}
-                                <div class="text-danger mt-1">
-                                    {% for error in form.email.errors %}
-                                    <small>{{ error }}</small>
-                                    {% endfor %}
+                                <div class="mb-3">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label">Your Email</label>
+                                    {{ form.email }}
                                 </div>
-                                {% endif %}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="{{ form.phone.id_for_label }}" class="form-label fw-semibold">
-                                    Phone Number
-                                </label>
-                                {{ form.phone }}
-                                {% if form.phone.errors %}
-                                <div class="text-danger mt-1">
-                                    {% for error in form.phone.errors %}
-                                    <small>{{ error }}</small>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="{{ form.subject.id_for_label }}" class="form-label fw-semibold">
-                                    Subject <span class="text-danger">*</span>
-                                </label>
-                                {{ form.subject }}
-                                {% if form.subject.errors %}
-                                <div class="text-danger mt-1">
-                                    {% for error in form.subject.errors %}
-                                    <small>{{ error }}</small>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
                             </div>
                             <div class="col-12">
-                                <label for="{{ form.message.id_for_label }}" class="form-label fw-semibold">
-                                    Message <span class="text-danger">*</span>
-                                </label>
-                                {{ form.message }}
-                                {% if form.message.errors %}
-                                <div class="text-danger mt-1">
-                                    {% for error in form.message.errors %}
-                                    <small>{{ error }}</small>
-                                    {% endfor %}
+                                <div class="mb-3">
+                                    <label for="{{ form.subject.id_for_label }}" class="form-label">Subject</label>
+                                    {{ form.subject }}
                                 </div>
-                                {% endif %}
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary btn-lg">
+                                <div class="mb-3">
+                                    <label for="{{ form.message.id_for_label }}" class="form-label">Your Message</label>
+                                    {{ form.message }}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg px-4">
                                     <i class="fas fa-paper-plane me-2"></i>Send Message
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
-
-            <!-- Contact Information -->
+            </div> <!-- Contact Information -->
             <div class="col-lg-4">
-                <div class="contact-info" data-aos="fade-left">
-                    <h2 class="h3 fw-bold mb-4">Let's Connect</h2>
-                    <p class="text-muted mb-4">
-                        I'm always excited to discuss new opportunities, collaborations, or just chat about technology
-                        and development.
-                    </p>
-
-                    <!-- Contact Details -->
-                    <div class="contact-details mb-4">
-                        {% if about %}
-                        {% if about.email %}
-                        <div class="contact-item d-flex align-items-center mb-3">
-                            <div class="contact-icon bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-                                <i class="fas fa-envelope text-primary"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-semibold mb-1">Email</h6>
-                                <a href="mailto:{{ about.email }}" class="text-muted text-decoration-none">
-                                    {{ about.email }}
-                                </a>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if about.phone %}
-                        <div class="contact-item d-flex align-items-center mb-3">
-                            <div class="contact-icon bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-                                <i class="fas fa-phone text-primary"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-semibold mb-1">Phone</h6>
-                                <a href="tel:{{ about.phone }}" class="text-muted text-decoration-none">
-                                    {{ about.phone }}
-                                </a>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if about.location %}
-                        <div class="contact-item d-flex align-items-center mb-3">
-                            <div class="contact-icon bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-                                <i class="fas fa-map-marker-alt text-primary"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-semibold mb-1">Location</h6>
-                                <span class="text-muted">{{ about.location }}</span>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endif %}
-
-                        <div class="contact-item d-flex align-items-center mb-3">
-                            <div class="contact-icon bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-                                <i class="fas fa-clock text-primary"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-semibold mb-1">Response Time</h6>
-                                <span class="text-muted">Within 24 hours</span>
-                            </div>
-                        </div>
-
-                        <div class="contact-item d-flex align-items-center mb-3">
-                            <div class="contact-icon bg-primary bg-opacity-10 rounded-circle p-3 me-3">
-                                <i class="fas fa-handshake text-primary"></i>
-                            </div>
-                            <div>
-                                <h6 class="fw-semibold mb-1">Availability</h6>
-                                {% if about and about.is_available_for_work %}
-                                <span class="text-success">
-                                    <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>
-                                    Open to new projects
-                                </span>
-                                {% else %}
-                                <span class="text-warning">
-                                    <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>
-                                    Currently busy
-                                </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Social Links -->
+                <div class="contact-info bg-white p-4 rounded shadow-sm">
+                    <h2 class="h3 fw-bold mb-4">Contact Information</h2>
                     {% if about %}
-                    <div class="social-connect">
-                        <h5 class="fw-semibold mb-3">Follow Me</h5>
-                        <div class="social-links">
-                            {% if about.github_url %}
-                            <a href="{{ about.github_url }}" target="_blank" class="btn btn-outline-dark me-2 mb-2">
-                                <i class="fab fa-github me-1"></i>GitHub
-                            </a>
-                            {% endif %}
-                            {% if about.linkedin_url %}
-                            <a href="{{ about.linkedin_url }}" target="_blank"
-                                class="btn btn-outline-primary me-2 mb-2">
-                                <i class="fab fa-linkedin me-1"></i>LinkedIn
-                            </a>
-                            {% endif %}
-                            {% if about.website_url %}
-                            <a href="{{ about.website_url }}" target="_blank" class="btn btn-outline-info me-2 mb-2">
-                                <i class="fas fa-globe me-1"></i>Website
-                            </a>
-                            {% endif %}
+                    <div class="contact-info-item mb-4 p-3 border-start border-primary border-3 bg-light rounded">
+                        <div class="icon bg-primary text-white rounded-circle p-3 mb-3 d-inline-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px;">
+                            <i class="fas fa-envelope fa-lg"></i>
                         </div>
+                        <h5 class="fw-bold">Email</h5>
+                        <p><a href="mailto:{{ about.email }}" class="text-decoration-none">{{ about.email }}</a></p>
+                    </div> {% if about.phone %}
+                    <div class="contact-info-item mb-4 p-3 border-start border-primary border-3 bg-light rounded">
+                        <div class="icon bg-primary text-white rounded-circle p-3 mb-3 d-inline-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px;">
+                            <i class="fas fa-phone fa-lg"></i>
+                        </div>
+                        <h5 class="fw-bold">Phone</h5>
+                        <p>
+                            <a href="tel:{{ about.phone }}" class="text-decoration-none me-2">{{ about.phone }}</a>
+                            <a href="https://wa.me/{{ about.phone|cut:'+' }}" class="btn btn-success btn-sm"
+                                target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </p>
                     </div>
                     {% endif %}
 
-                    <!-- Resume Download -->
-                    {% if about.resume_file %}
-                    <div class="resume-download mt-4">
-                        <h5 class="fw-semibold mb-3">Resume</h5>
-                        <a href="{{ about.resume_file.url }}" target="_blank" class="btn btn-success w-100">
-                            <i class="fas fa-download me-2"></i>Download Resume
+                    {% if about.location %}
+                    <div class="contact-info-item mb-4 p-3 border-start border-primary border-3 bg-light rounded">
+                        <div class="icon bg-primary text-white rounded-circle p-3 mb-3 d-inline-flex align-items-center justify-content-center"
+                            style="width: 50px; height: 50px;">
+                            <i class="fas fa-map-marker-alt fa-lg"></i>
+                        </div>
+                        <h5 class="fw-bold">Location</h5>
+                        <p>{{ about.location }}</p>
+                    </div>
+                    {% endif %}
+
+                    <div class="social-links mt-4">
+                        {% if about.linkedin_url %}
+                        <a href="{{ about.linkedin_url }}" class="btn btn-outline-primary me-2 mb-2" target="_blank">
+                            <i class="fab fa-linkedin"></i>
                         </a>
+                        {% endif %}
+
+                        {% if about.github_url %}
+                        <a href="{{ about.github_url }}" class="btn btn-outline-primary me-2 mb-2" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if about.website_url %}
+                        <a href="{{ about.website_url }}" class="btn btn-outline-primary me-2 mb-2" target="_blank">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>
@@ -243,108 +140,18 @@
     </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="faq-section py-5 bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="text-center mb-5">
-                    <h2 class="h3 fw-bold" data-aos="fade-up">Frequently Asked Questions</h2>
-                    <p class="text-muted" data-aos="fade-up" data-aos-delay="100">
-                        Here are some common questions I receive from potential clients
-                    </p>
-                </div>
-
-                <div class="accordion" id="faqAccordion" data-aos="fade-up" data-aos-delay="200">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="faq1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                What types of projects do you work on?
-                            </button>
-                        </h2>
-                        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="faq1"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                I specialize in web development projects including business websites, web applications,
-                                e-commerce platforms, and custom software solutions. I work with modern technologies
-                                like Django, React, and various databases to create scalable and efficient applications.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="faq2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                What's your typical project timeline?
-                            </button>
-                        </h2>
-                        <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Project timelines vary depending on complexity and requirements. Simple websites
-                                typically
-                                take 2-4 weeks, while complex web applications can take 2-6 months. I always provide
-                                detailed timelines during our initial consultation and keep you updated throughout the
-                                process.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="faq3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                Do you provide ongoing support and maintenance?
-                            </button>
-                        </h2>
-                        <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Yes! I offer ongoing support and maintenance packages to ensure your website or
-                                application
-                                stays secure, updated, and running smoothly. This includes regular updates, security
-                                monitoring,
-                                performance optimization, and technical support.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="faq4">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                                How do you handle project pricing?
-                            </button>
-                        </h2>
-                        <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="faq4"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                I provide transparent, fixed-price quotes based on your specific requirements. After our
-                                initial consultation, I'll provide a detailed proposal outlining the scope, timeline,
-                                and
-                                cost. I also offer flexible payment plans to accommodate different budget needs.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- CTA Section -->
 <section class="cta-section py-5 bg-primary text-white">
     <div class="container text-center">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2 class="h3 fw-bold mb-4" data-aos="fade-up">Ready to Get Started?</h2>
-                <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                <h2 class="h3 fw-bold mb-4">Ready to Get Started?</h2>
+                <p class="lead mb-4">
                     Don't hesitate to reach out. I'm here to help turn your ideas into reality.
                 </p>
-                <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#contact-form" class="btn btn-light btn-lg me-3 mb-2 smooth-scroll">
+                <div class="cta-buttons">
+                    <a href="#contact-form" class="btn btn-light btn-lg me-3 mb-2">
                         <i class="fas fa-arrow-up me-2"></i>Send Message
                     </a>
                     <a href="{% url 'portfolio:projects' %}" class="btn btn-outline-light btn-lg mb-2">
@@ -359,30 +166,37 @@
 
 {% block extra_js %}
 <script>
-    // Smooth scrolling for anchor links
+    // Simple form submission handling
     document.addEventListener('DOMContentLoaded', function () {
-        const smoothScrollLinks = document.querySelectorAll('.smooth-scroll');
-
-        smoothScrollLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
+        // Smooth scrolling for buttons that link to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
 
-        // Form validation feedback
+        // Simple form submission state
         const form = document.querySelector('.contact-form');
         if (form) {
-            form.addEventListener('submit', function (e) {
-                const submitButton = this.querySelector('button[type="submit"]');
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-                submitButton.disabled = true;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalHtml = submitBtn.innerHTML;
+
+            form.addEventListener('submit', function () {
+                // Store original button text
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+                submitBtn.disabled = true;
+
+                // If user navigates back or form submits with errors, reset button
+                setTimeout(function () {
+                    if (document.querySelector('.alert-danger')) {
+                        submitBtn.innerHTML = originalHtml;
+                        submitBtn.disabled = false;
+                    }
+                }, 500);
             });
         }
     });
