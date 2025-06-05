@@ -13,15 +13,11 @@
                 <div class="hero-content">
                     {% if about %}
                     <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInUp">
-                        Hi, I'm {{ about.title|default:"Vijay" }}
+                        Hi, I'm {{ about.title }}
                     </h1>
                     <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
-                        {{ about.description|default:"Full Stack Developer passionate about creating innovative web
-                        solutions" }}
+                        {{ about.description }}
                     </p>
-                    {% else %}
-                    <h1 class="display-4 fw-bold mb-4">Hi, I'm Vijay</h1>
-                    <p class="lead mb-4">Full Stack Developer passionate about creating innovative web solutions</p>
                     {% endif %}
 
                     <div class="hero-buttons animate__animated animate__fadeInUp animate__delay-2s">
@@ -92,16 +88,11 @@
                     {% endif %}
                     <h5 class="fw-semibold">{{ skill.name }}</h5>
                     <p class="text-muted mb-3">{{ skill.get_level_display }}</p>
-                    <div class="progress">
-                        <div class="progress-bar bg-primary" style="width: {{ skill.percentage }}%"
-                            aria-valuenow="{{ skill.percentage }}" aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                    </div>
-                    <small class="text-muted">{{ skill.percentage }}%</small>
                 </div>
             </div>
             {% endfor %}
-        </div>        <div class="text-center mt-5">
+        </div>
+        <div class="text-center mt-5">
             <a href="{% url 'portfolio:projects' %}" class="btn btn-primary btn-lg">
                 <i class="fas fa-plus me-2"></i>View All Projects
             </a>
