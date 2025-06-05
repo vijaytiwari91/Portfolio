@@ -1,3 +1,5 @@
+import time
+from django.db import transaction, connections
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -6,6 +8,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 from .models import (
     AboutSection, Skill, Project, Experience, 
     Education, ContactMessage
@@ -122,13 +125,28 @@ def experience(request):
 
 def contact(request):
     """Contact page with form"""
-    import time
-    from django.db import transaction, connections
     
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             try:
+
+                name = form.cleaned_data['name']
+                email = form.cleaned_data['email']
+                subject = form.cleaned_data['subject']
+                message = form.cleaned_data['message']
+                full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+
+                print("Sending email with subject:", subject)
+                print("Full message content:", full_message)
+                send_mail(
+                subject=subject,
+                message=full_message,
+                from_email=email,  # or DEFAULT_FROM_EMAIL
+                recipient_list=['gvedhanth123@gmail.com'],  # Where you receive emails
+                fail_silently=False,
+                )
+
                 # Use a transaction with a timeout to prevent database locks
                 with transaction.atomic():
                     contact_msg = form.save(commit=False)
@@ -140,8 +158,10 @@ def contact(request):
                         
                     messages.success(request, 'Thank you! Your message has been sent successfully.')
                     return redirect('portfolio:contact')
+                
             except Exception as e:
                 # If there's a database error, show an error message
+                print(e)
                 messages.error(request, f'Sorry, we could not send your message. Please try again later.')
     else:
         form = ContactForm()

@@ -140,7 +140,16 @@ LOGOUT_REDIRECT_URL = '/'
 # Email Configuration for Gmail OTP Password Reset
 # For development, we'll use console backend (prints emails to console)
 # Comment out the line below and uncomment Gmail settings when ready for production
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'gvsvp0918@gmail.com'  # Your SMTP username
+EMAIL_HOST_PASSWORD = 'exbk aloq puzb inbj'  # Your SMTP password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # Gmail SMTP Configuration (uncomment for production)
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
