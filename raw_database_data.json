@@ -1,0 +1,734 @@
+{
+    "auth_group_permissions": [],
+    "auth_user_groups": [],
+    "auth_user_user_permissions": [],
+    "auth_permission": [
+        {
+            "id": 1,
+            "content_type_id": 1,
+            "codename": "add_logentry",
+            "name": "Can add log entry"
+        },
+        {
+            "id": 2,
+            "content_type_id": 1,
+            "codename": "change_logentry",
+            "name": "Can change log entry"
+        },
+        {
+            "id": 3,
+            "content_type_id": 1,
+            "codename": "delete_logentry",
+            "name": "Can delete log entry"
+        },
+        {
+            "id": 4,
+            "content_type_id": 1,
+            "codename": "view_logentry",
+            "name": "Can view log entry"
+        },
+        {
+            "id": 5,
+            "content_type_id": 2,
+            "codename": "add_permission",
+            "name": "Can add permission"
+        },
+        {
+            "id": 6,
+            "content_type_id": 2,
+            "codename": "change_permission",
+            "name": "Can change permission"
+        },
+        {
+            "id": 7,
+            "content_type_id": 2,
+            "codename": "delete_permission",
+            "name": "Can delete permission"
+        },
+        {
+            "id": 8,
+            "content_type_id": 2,
+            "codename": "view_permission",
+            "name": "Can view permission"
+        },
+        {
+            "id": 9,
+            "content_type_id": 3,
+            "codename": "add_group",
+            "name": "Can add group"
+        },
+        {
+            "id": 10,
+            "content_type_id": 3,
+            "codename": "change_group",
+            "name": "Can change group"
+        },
+        {
+            "id": 11,
+            "content_type_id": 3,
+            "codename": "delete_group",
+            "name": "Can delete group"
+        },
+        {
+            "id": 12,
+            "content_type_id": 3,
+            "codename": "view_group",
+            "name": "Can view group"
+        },
+        {
+            "id": 13,
+            "content_type_id": 4,
+            "codename": "add_user",
+            "name": "Can add user"
+        },
+        {
+            "id": 14,
+            "content_type_id": 4,
+            "codename": "change_user",
+            "name": "Can change user"
+        },
+        {
+            "id": 15,
+            "content_type_id": 4,
+            "codename": "delete_user",
+            "name": "Can delete user"
+        },
+        {
+            "id": 16,
+            "content_type_id": 4,
+            "codename": "view_user",
+            "name": "Can view user"
+        },
+        {
+            "id": 17,
+            "content_type_id": 5,
+            "codename": "add_contenttype",
+            "name": "Can add content type"
+        },
+        {
+            "id": 18,
+            "content_type_id": 5,
+            "codename": "change_contenttype",
+            "name": "Can change content type"
+        },
+        {
+            "id": 19,
+            "content_type_id": 5,
+            "codename": "delete_contenttype",
+            "name": "Can delete content type"
+        },
+        {
+            "id": 20,
+            "content_type_id": 5,
+            "codename": "view_contenttype",
+            "name": "Can view content type"
+        },
+        {
+            "id": 21,
+            "content_type_id": 6,
+            "codename": "add_session",
+            "name": "Can add session"
+        },
+        {
+            "id": 22,
+            "content_type_id": 6,
+            "codename": "change_session",
+            "name": "Can change session"
+        },
+        {
+            "id": 23,
+            "content_type_id": 6,
+            "codename": "delete_session",
+            "name": "Can delete session"
+        },
+        {
+            "id": 24,
+            "content_type_id": 6,
+            "codename": "view_session",
+            "name": "Can view session"
+        },
+        {
+            "id": 25,
+            "content_type_id": 7,
+            "codename": "add_aboutsection",
+            "name": "Can add About Section"
+        },
+        {
+            "id": 26,
+            "content_type_id": 7,
+            "codename": "change_aboutsection",
+            "name": "Can change About Section"
+        },
+        {
+            "id": 27,
+            "content_type_id": 7,
+            "codename": "delete_aboutsection",
+            "name": "Can delete About Section"
+        },
+        {
+            "id": 28,
+            "content_type_id": 7,
+            "codename": "view_aboutsection",
+            "name": "Can view About Section"
+        },
+        {
+            "id": 29,
+            "content_type_id": 8,
+            "codename": "add_contactmessage",
+            "name": "Can add contact message"
+        },
+        {
+            "id": 30,
+            "content_type_id": 8,
+            "codename": "change_contactmessage",
+            "name": "Can change contact message"
+        },
+        {
+            "id": 31,
+            "content_type_id": 8,
+            "codename": "delete_contactmessage",
+            "name": "Can delete contact message"
+        },
+        {
+            "id": 32,
+            "content_type_id": 8,
+            "codename": "view_contactmessage",
+            "name": "Can view contact message"
+        },
+        {
+            "id": 33,
+            "content_type_id": 9,
+            "codename": "add_education",
+            "name": "Can add education"
+        },
+        {
+            "id": 34,
+            "content_type_id": 9,
+            "codename": "change_education",
+            "name": "Can change education"
+        },
+        {
+            "id": 35,
+            "content_type_id": 9,
+            "codename": "delete_education",
+            "name": "Can delete education"
+        },
+        {
+            "id": 36,
+            "content_type_id": 9,
+            "codename": "view_education",
+            "name": "Can view education"
+        },
+        {
+            "id": 37,
+            "content_type_id": 10,
+            "codename": "add_skill",
+            "name": "Can add skill"
+        },
+        {
+            "id": 38,
+            "content_type_id": 10,
+            "codename": "change_skill",
+            "name": "Can change skill"
+        },
+        {
+            "id": 39,
+            "content_type_id": 10,
+            "codename": "delete_skill",
+            "name": "Can delete skill"
+        },
+        {
+            "id": 40,
+            "content_type_id": 10,
+            "codename": "view_skill",
+            "name": "Can view skill"
+        },
+        {
+            "id": 41,
+            "content_type_id": 11,
+            "codename": "add_project",
+            "name": "Can add project"
+        },
+        {
+            "id": 42,
+            "content_type_id": 11,
+            "codename": "change_project",
+            "name": "Can change project"
+        },
+        {
+            "id": 43,
+            "content_type_id": 11,
+            "codename": "delete_project",
+            "name": "Can delete project"
+        },
+        {
+            "id": 44,
+            "content_type_id": 11,
+            "codename": "view_project",
+            "name": "Can view project"
+        },
+        {
+            "id": 45,
+            "content_type_id": 12,
+            "codename": "add_experience",
+            "name": "Can add experience"
+        },
+        {
+            "id": 46,
+            "content_type_id": 12,
+            "codename": "change_experience",
+            "name": "Can change experience"
+        },
+        {
+            "id": 47,
+            "content_type_id": 12,
+            "codename": "delete_experience",
+            "name": "Can delete experience"
+        },
+        {
+            "id": 48,
+            "content_type_id": 12,
+            "codename": "view_experience",
+            "name": "Can view experience"
+        }
+    ],
+    "auth_group": [],
+    "auth_user": [
+        {
+            "id": 1,
+            "password": "pbkdf2_sha256$1000000$Yf25n3e7NqUlaJE3M4RMcc$dhoU5lIruxErsppa67yewKIVYqDuZvghjFFZfnN/pdE=",
+            "last_login": "2025-06-04 12:14:52.129815",
+            "is_superuser": 1,
+            "username": "Vijay",
+            "last_name": "Tiwari",
+            "email": "vt645908@gmail.com",
+            "is_staff": 1,
+            "is_active": 1,
+            "date_joined": "2025-06-03 09:52:31",
+            "first_name": "Vijay"
+        }
+    ],
+    "portfolio_aboutsection": [
+        {
+            "id": 1,
+            "title": "Vijay Tiwari",
+            "description": "I possess a strong command of SQL, Power BI, Tableau, Python, Advanced MS-Excel, and an array of tools within the MS-Office suite. My philosophy centers on delivering added value to every role I undertake. \r\n\r\nAs a passionate Data Analyst with strong analytical skills, I am seeking challenging opportunities in Data Analysis to leverage my academic knowledge and gain practical experience in a professional setting. I believe in transforming raw data into meaningful insights that drive business decisions.\r\n\r\nMy experience includes data cleaning, preprocessing, quality analysis, and creating interactive dashboards and visualizations. I have successfully worked on various projects involving e-commerce analysis, literacy trends analysis, and crime data analysis, demonstrating my ability to extract valuable insights from complex datasets.",
+            "profile_image": "profile/vijay_profile.jpg",
+            "resume_file": "",
+            "email": "Vijaydataanalyst91@gmail.com",
+            "phone": "9131735630",
+            "location": "Hyderabad, India",
+            "linkedin_url": "https://linkedin.com/in/vijay-tiwari-data-analyst",
+            "github_url": "https://github.com/vijaytiwari91",
+            "website_url": "",
+            "created_at": "2025-06-03 10:35:35.835993",
+            "updated_at": "2025-06-04 06:23:19.885838"
+        }
+    ],
+    "portfolio_contactmessage": [],
+    "portfolio_education": [
+        {
+            "id": 1,
+            "institution_name": "Swami Vivekanand University",
+            "degree": "Bachelor of Computer Science Engineering",
+            "degree_type": "bachelor",
+            "field_of_study": "Computer Science Engineering",
+            "description": "Comprehensive study of computer science fundamentals, programming, data structures, algorithms, and software engineering principles.",
+            "gpa": "78%",
+            "start_date": "2019-06-01",
+            "end_date": "2023-05-31",
+            "institution_url": "",
+            "location": "India",
+            "is_current": 0,
+            "order": 1,
+            "created_at": "2025-06-03 10:35:35.885772"
+        },
+        {
+            "id": 2,
+            "institution_name": "Govt Nehru High Secondary School",
+            "degree": "Intermediate \u2013 12th Standard",
+            "degree_type": "other",
+            "field_of_study": "Science",
+            "description": "Higher Secondary Education with focus on Science subjects.",
+            "gpa": "70%",
+            "start_date": "2018-06-01",
+            "end_date": "2019-03-31",
+            "institution_url": "",
+            "location": "India",
+            "is_current": 0,
+            "order": 2,
+            "created_at": "2025-06-03 10:35:35.896021"
+        },
+        {
+            "id": 3,
+            "institution_name": "Govt Chandan Devi High School",
+            "degree": "SSLC \u2013 10th Standard",
+            "degree_type": "other",
+            "field_of_study": "General",
+            "description": "Secondary School Leaving Certificate.",
+            "gpa": "72%",
+            "start_date": "2017-06-01",
+            "end_date": "2018-03-31",
+            "institution_url": "",
+            "location": "India",
+            "is_current": 0,
+            "order": 3,
+            "created_at": "2025-06-03 10:35:35.897766"
+        }
+    ],
+    "portfolio_skill": [
+        {
+            "id": 1,
+            "name": "Python",
+            "category": "programming",
+            "icon": "fab fa-python",
+            "order": 0,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.841952"
+        },
+        {
+            "id": 2,
+            "name": "MySQL",
+            "category": "database",
+            "icon": "fas fa-database",
+            "order": 1,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.844954"
+        },
+        {
+            "id": 3,
+            "name": "SQL Server",
+            "category": "database",
+            "icon": "fas fa-server",
+            "order": 2,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.848659"
+        },
+        {
+            "id": 4,
+            "name": "SQLite3",
+            "category": "database",
+            "icon": "fas fa-database",
+            "order": 3,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.852406"
+        },
+        {
+            "id": 5,
+            "name": "Pandas",
+            "category": "programming",
+            "icon": "fas fa-chart-line",
+            "order": 4,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.854434"
+        },
+        {
+            "id": 6,
+            "name": "NumPy",
+            "category": "programming",
+            "icon": "fas fa-calculator",
+            "order": 5,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.857941"
+        },
+        {
+            "id": 7,
+            "name": "Matplotlib",
+            "category": "programming",
+            "icon": "fas fa-chart-bar",
+            "order": 6,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.857941"
+        },
+        {
+            "id": 8,
+            "name": "Seaborn",
+            "category": "programming",
+            "icon": "fas fa-chart-area",
+            "order": 7,
+            "is_featured": 1,
+            "created_at": "2025-06-03 10:35:35.863465"
+        },
+        {
+            "id": 9,
+            "name": "Tableau",
+            "category": "frontend",
+            "icon": "fas fa-chart-pie",
+            "order": 8,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.867311"
+        },
+        {
+            "id": 10,
+            "name": "Power BI",
+            "category": "frontend",
+            "icon": "fas fa-chart-line",
+            "order": 9,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.867311"
+        },
+        {
+            "id": 11,
+            "name": "MS Excel",
+            "category": "other",
+            "icon": "fas fa-file-excel",
+            "order": 10,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.867311"
+        },
+        {
+            "id": 12,
+            "name": "VBA Macro",
+            "category": "programming",
+            "icon": "fas fa-code",
+            "order": 11,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.867311"
+        },
+        {
+            "id": 13,
+            "name": "Data Cleaning",
+            "category": "other",
+            "icon": "fas fa-broom",
+            "order": 12,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.876015"
+        },
+        {
+            "id": 14,
+            "name": "Data Modeling",
+            "category": "other",
+            "icon": "fas fa-project-diagram",
+            "order": 13,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.880259"
+        },
+        {
+            "id": 15,
+            "name": "Data Visualization",
+            "category": "other",
+            "icon": "fas fa-chart-bar",
+            "order": 14,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.882094"
+        },
+        {
+            "id": 16,
+            "name": "Statistical Analysis",
+            "category": "other",
+            "icon": "fas fa-calculator",
+            "order": 15,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.885772"
+        },
+        {
+            "id": 17,
+            "name": "ETL Processes",
+            "category": "other",
+            "icon": "fas fa-exchange-alt",
+            "order": 16,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.885772"
+        },
+        {
+            "id": 18,
+            "name": "Dashboard Development",
+            "category": "frontend",
+            "icon": "fas fa-tachometer-alt",
+            "order": 17,
+            "is_featured": 0,
+            "created_at": "2025-06-03 10:35:35.885772"
+        }
+    ],
+    "portfolio_project": [
+        {
+            "id": 1,
+            "title": "E-Commerce User Analysis",
+            "slug": "ecommerce-user-analysis",
+            "description": "This project involved analyzing user data for an e-commerce platform to gain insights into user behavior, demographics, and preferences. \r\n\r\n**Key Achievements:**\r\n\u2022 Analyzed a comprehensive dataset containing 98,913 rows and 27 columns of user data\r\n\u2022 Explored dataset structure and performed initial analysis to understand data quality and completeness\r\n\u2022 Examined user demographics including age groups, geographic distribution, and user segments\r\n\u2022 Analyzed follower counts and social engagement patterns to understand user influence\r\n\u2022 Investigated user preferences, purchase patterns, and product interests\r\n\u2022 Examined user engagement metrics, wish-list preferences, and platform usage\r\n\u2022 Analyzed language usage patterns and regional preferences\r\n\u2022 Provided actionable insights for improving user experience and targeted marketing strategies\r\n\r\n**Technical Implementation:**\r\n\u2022 Used SQL for data extraction, cleaning, and complex queries\r\n\u2022 Performed statistical analysis to identify trends and patterns\r\n\u2022 Created data models to segment users based on behavior and demographics\r\n\u2022 Generated comprehensive reports with visualizations for stakeholder presentations\r\n\r\n**Business Impact:**\r\n\u2022 Identified key user segments for targeted marketing campaigns\r\n\u2022 Provided insights for product recommendation improvements\r\n\u2022 Helped optimize user engagement strategies based on demographic analysis",
+            "short_description": "Comprehensive analysis of e-commerce user data with 98,913 rows and 27 columns to understand user behavior and preferences.",
+            "project_type": "data",
+            "image": "projects/Ecommerce_analysis.webp",
+            "live_url": "",
+            "github_url": "https://github.com/vijaytiwari91/Business-analysis-of-E-commerce-Dataset-Using-sql-",
+            "demo_url": "",
+            "is_featured": 1,
+            "is_published": 1,
+            "order": 1,
+            "created_at": "2025-06-03 10:35:35.916881",
+            "updated_at": "2025-06-04 06:16:46.296064"
+        },
+        {
+            "id": 3,
+            "title": "Crime Analysis in India",
+            "slug": "india-crime-analysis",
+            "description": "A comprehensive crime data analysis project for India using Python and advanced data science techniques to extract meaningful insights.\r\n\r\n**Key Achievements:**\r\n\u2022 Collected and processed crime dataset from Kaggle.com with extensive data cleaning\r\n\u2022 Performed complete ETL (Extract, Transform, Load) process on large-scale crime data\r\n\u2022 Successfully removed outliers and handled null values to ensure data quality\r\n\u2022 Presented insights on crime underrepresentation and reporting patterns\r\n\u2022 Analyzed graduation trends and their correlation with crime rates\r\n\u2022 Investigated educational disparities and their impact on crime statistics\r\n\u2022 Conducted salary vs crime rate comparisons across different regions\r\n\r\n**Technical Implementation:**\r\n\u2022 Used Python for data manipulation and statistical analysis\r\n\u2022 Implemented Pandas for data preprocessing and cleaning\r\n\u2022 Applied advanced outlier detection and removal techniques\r\n\u2022 Created data pipelines for automated data processing\r\n\u2022 Performed statistical analysis and hypothesis testing\r\n\r\n**Data Processing Techniques:**\r\n\u2022 Handled missing data using multiple imputation methods\r\n\u2022 Applied statistical outlier detection (IQR method, Z-score)\r\n\u2022 Normalized data for comparative analysis across states\r\n\u2022 Created derived variables for enhanced analysis\r\n\r\n**Key Insights:**\r\n\u2022 Identified patterns in crime reporting and underrepresentation\r\n\u2022 Established correlations between education levels and crime rates\r\n\u2022 Analyzed regional variations in crime patterns\r\n\u2022 Provided recommendations for crime prevention strategies\r\n\r\n**Deliverables:**\r\n\u2022 Comprehensive PowerPoint presentation with key findings\r\n\u2022 Statistical analysis reports with actionable insights\r\n\u2022 Data visualization charts showing crime trends and patterns",
+            "short_description": "Python-based analysis of crime data in India using Pandas, focusing on data preprocessing, outlier removal, and statistical insights.",
+            "project_type": "data",
+            "image": "projects/Crime_Analysis.webp",
+            "live_url": "",
+            "github_url": "https://github.com/vijaytiwari91/Criminal-Activities-in-India",
+            "demo_url": "",
+            "is_featured": 1,
+            "is_published": 1,
+            "order": 3,
+            "created_at": "2025-06-03 10:35:35.935964",
+            "updated_at": "2025-06-04 06:19:55.847368"
+        },
+        {
+            "id": 4,
+            "title": "EDA on Vehicle Insurance Customer Data",
+            "slug": "vehicle-insurance-eda",
+            "description": "Conducted comprehensive Exploratory Data Analysis (EDA) on Vehicle Insurance Customer Data to extract valuable business insights and customer behavior patterns.\r\n\r\n**Key Achievements:**\r\n\u2022 Performed comprehensive EDA on Vehicle Insurance Customer Data using Python and Pandas\r\n\u2022 Demonstrated strong data cleaning and analytical skills with complex insurance datasets\r\n\u2022 Implemented effective data preprocessing techniques to handle various data quality issues\r\n\u2022 Extracted valuable insights from complex datasets for business decision making\r\n\u2022 Created detailed customer segmentation analysis for targeted marketing strategies\r\n\r\n**Technical Implementation:**\r\n\u2022 Used Python as primary programming language for analysis\r\n\u2022 Leveraged Pandas for data manipulation, cleaning, and analysis\r\n\u2022 Implemented Matplotlib for creating insightful visualizations\r\n\u2022 Applied statistical methods for customer behavior analysis\r\n\u2022 Performed correlation analysis and feature engineering\r\n\r\n**Data Analysis Techniques:**\r\n\u2022 Univariate analysis of customer demographics and policy details\r\n\u2022 Bivariate analysis to understand relationships between variables\r\n\u2022 Customer segmentation based on policy preferences and demographics\r\n\u2022 Churn analysis and risk assessment modeling\r\n\u2022 Premium analysis and pricing optimization insights\r\n\r\n**Key Insights Generated:**\r\n\u2022 Customer demographic patterns and preferences\r\n\u2022 Policy renewal and retention trends\r\n\u2022 Risk factors affecting insurance claims\r\n\u2022 Pricing optimization opportunities\r\n\u2022 Customer lifetime value analysis\r\n\r\n**Visualizations Created:**\r\n\u2022 Distribution plots for customer demographics\r\n\u2022 Correlation heatmaps for feature relationships\r\n\u2022 Box plots for outlier detection and analysis\r\n\u2022 Bar charts for categorical variable analysis\r\n\u2022 Scatter plots for continuous variable relationships\r\n\r\n**Business Impact:**\r\n\u2022 Provided actionable insights for customer retention strategies\r\n\u2022 Identified opportunities for cross-selling and upselling\r\n\u2022 Helped optimize pricing strategies based on risk analysis\r\n\u2022 Supported development of targeted marketing campaigns",
+            "short_description": "Exploratory Data Analysis on Vehicle Insurance Customer Data using Python, Pandas, and Matplotlib for customer insights.",
+            "project_type": "data",
+            "image": "projects/car-insurance-market.png",
+            "live_url": "",
+            "github_url": "https://github.com/vijaytiwari91/EDA-on-Vehicle-Insurance-Customer-Data",
+            "demo_url": "",
+            "is_featured": 1,
+            "is_published": 1,
+            "order": 4,
+            "created_at": "2025-06-03 10:35:35.935964",
+            "updated_at": "2025-06-04 06:21:11.849470"
+        }
+    ],
+    "portfolio_project_technologies": [
+        {
+            "id": 1,
+            "project_id": 1,
+            "skill_id": 2
+        },
+        {
+            "id": 2,
+            "project_id": 1,
+            "skill_id": 11
+        },
+        {
+            "id": 5,
+            "project_id": 3,
+            "skill_id": 1
+        },
+        {
+            "id": 6,
+            "project_id": 3,
+            "skill_id": 5
+        },
+        {
+            "id": 7,
+            "project_id": 4,
+            "skill_id": 1
+        },
+        {
+            "id": 8,
+            "project_id": 4,
+            "skill_id": 5
+        },
+        {
+            "id": 9,
+            "project_id": 4,
+            "skill_id": 7
+        }
+    ],
+    "portfolio_experience": [
+        {
+            "id": 1,
+            "company_name": "Referenceglobe",
+            "position": "Data Analyst",
+            "experience_type": "work",
+            "description": "\u2022 Conducted data cleaning and preprocessing using MySQL queries and Excel\n\u2022 Performed quality analysis of system products to ensure they meet high standards and requirements\n\u2022 Assisted the development team in performing system health checks and verifying system functionality\n\u2022 Provided effective technical support and troubleshooting, resolving issues promptly to maintain smooth CRM operations\n\u2022 Delivered product demos to Heads of Departments (HODs), faculty, and Training and Placement Officers (TPOs)\n\u2022 Gathered client requirements and coordinated with the development team to ensure needs are understood and addressed\n\u2022 Used Excel to clean and prepare data before uploading it into the system\n\u2022 Provided reports and visualizations through dashboards when additional insights or metrics were required\n\u2022 Contributed to company efficiency through streamlined data management, improved system functionality, and enhanced user satisfaction",
+            "start_date": "2024-02-01",
+            "end_date": "2024-09-30",
+            "company_url": "",
+            "location": "India",
+            "is_current": 0,
+            "order": 2,
+            "created_at": "2025-06-03 10:35:35.903806"
+        },
+        {
+            "id": 2,
+            "company_name": "Skill Lync",
+            "position": "Data Analyst Intern",
+            "experience_type": "internship",
+            "description": "\u2022 Conducted research, analysis, and preparation of project reports for retail e-commerce projects\n\u2022 Analyzed retail sales data transactions of e-commerce company with comprehensive data analysis\n\u2022 Delivered interactive reports and dashboards for monitoring KPIs including Products, Orders, Sales, Profit, Quantity, Loss\n\u2022 Created visualizations on Weekly, Monthly, Quarterly, and Yearly basis for business insights\n\u2022 Successfully completed certification program in Data Analyst and Data Science internship\n\u2022 Gained hands-on experience with real-world data analysis projects and industry best practices",
+            "start_date": "2023-09-01",
+            "end_date": "2023-11-30",
+            "company_url": "",
+            "location": "Chennai, India",
+            "is_current": 0,
+            "order": 3,
+            "created_at": "2025-06-03 10:35:35.916881"
+        },
+        {
+            "id": 3,
+            "company_name": "TMI Group",
+            "position": "Data Analyst",
+            "experience_type": "work",
+            "description": "Responsible for building visually appealing dashboards using PowerBi, Maintaining all the necessary data in Excel and creating summaries and reports.",
+            "start_date": "2024-10-15",
+            "end_date": null,
+            "company_url": "https://tmigroup.in/",
+            "location": "Hyderabad, India",
+            "is_current": 1,
+            "order": 1,
+            "created_at": "2025-06-04 06:10:24.287061"
+        }
+    ],
+    "portfolio_experience_technologies_used": [
+        {
+            "id": 1,
+            "experience_id": 1,
+            "skill_id": 10
+        },
+        {
+            "id": 2,
+            "experience_id": 1,
+            "skill_id": 2
+        },
+        {
+            "id": 3,
+            "experience_id": 1,
+            "skill_id": 11
+        },
+        {
+            "id": 4,
+            "experience_id": 2,
+            "skill_id": 1
+        },
+        {
+            "id": 5,
+            "experience_id": 2,
+            "skill_id": 11
+        },
+        {
+            "id": 6,
+            "experience_id": 2,
+            "skill_id": 9
+        },
+        {
+            "id": 7,
+            "experience_id": 3,
+            "skill_id": 10
+        },
+        {
+            "id": 8,
+            "experience_id": 3,
+            "skill_id": 11
+        },
+        {
+            "id": 9,
+            "experience_id": 3,
+            "skill_id": 15
+        },
+        {
+            "id": 10,
+            "experience_id": 3,
+            "skill_id": 16
+        },
+        {
+            "id": 11,
+            "experience_id": 3,
+            "skill_id": 18
+        }
+    ]
+}

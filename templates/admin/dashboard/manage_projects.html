@@ -1,0 +1,149 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block title %}Manage Projects - {{ block.super }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<style>
+    .project-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.2s;
+    }
+
+    .project-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .project-image {
+        width: 100px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .toggle-btn {
+        cursor: pointer;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+    .featured {
+        background: #4CAF50;
+        color: white;
+    }
+
+    .not-featured {
+        background: #ccc;
+        color: #666;
+    }
+
+    .project-meta {
+        font-size: 0.9rem;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="manage-projects">
+    <h1>Manage Projects</h1>
+    <p class="help">Quickly manage your project visibility and featured status.</p>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <a href="/admin/portfolio/project/add/" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add New Project
+            </a>
+            <a href="{% url 'portfolio:dashboard_home' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    {% for project in projects %}
+    <div class="project-card">
+        <div class="row">
+            <div class="col-md-2">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+                {% else %}
+                <div class="project-image bg-light d-flex align-items-center justify-content-center">
+                    <i class="fas fa-image text-muted"></i>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-7">
+                <h4>{{ project.title }}</h4>
+                <p class="project-meta">
+                    <span class="badge badge-primary">{{ project.get_project_type_display }}</span>
+                    <span class="text-muted">Created: {{ project.created_at|date:"M d, Y" }}</span>
+                </p>
+                <p>{{ project.short_description|truncatechars:100 }}</p>
+                <div class="technologies">
+                    {% for tech in project.technologies.all|slice:":3" %}
+                    <span class="badge badge-light">{{ tech.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-3 text-right">
+                <div class="mb-2">
+                    <button class="toggle-btn {% if project.is_featured %}featured{% else %}not-featured{% endif %}"
+                        onclick="toggleFeatured({{ project.id }}, this)">
+                        {% if project.is_featured %}Featured{% else %}Not Featured{% endif %}
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <span class="badge badge-{% if project.is_published %}success{% else %}warning{% endif %}">
+                        {% if project.is_published %}Published{% else %}Draft{% endif %}
+                    </span>
+                </div>
+                <div>
+                    <a href="/admin/portfolio/project/{{ project.id }}/change/" class="btn btn-sm btn-primary">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'portfolio:project_detail' project.slug %}" class="btn btn-sm btn-info"
+                        target="_blank">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="project-card text-center">
+        <h3>No projects yet!</h3>
+        <p>Start by adding your first project.</p>
+        <a href="/admin/portfolio/project/add/" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Add Your First Project
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    function toggleFeatured(projectId, button) {
+        fetch(`/dashboard/project/${projectId}/toggle-featured/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    button.textContent = data.is_featured ? 'Featured' : 'Not Featured';
+                    button.className = 'toggle-btn ' + (data.is_featured ? 'featured' : 'not-featured');
+                }
+            });
+    }
+</script>
+{% endblock %}

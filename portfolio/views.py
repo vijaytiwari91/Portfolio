@@ -10,6 +10,10 @@ from .models import (
     AboutSection, Skill, Project, Experience, 
     Education, ContactMessage
 )
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
+
 from .forms import (
     AboutSectionForm, SkillForm, ProjectForm, 
     ExperienceForm, EducationForm, ContactForm
@@ -33,28 +37,6 @@ def home(request):
         'recent_experience': recent_experience,
     }
     return render(request, 'portfolio/home.html', context)
-
-def about(request):
-    """About page view"""
-    try:
-        about_section = AboutSection.objects.first()
-    except AboutSection.DoesNotExist:
-        about_section = None
-    
-    skills_by_category = {}
-    for skill in Skill.objects.all():
-        if skill.category not in skills_by_category:
-            skills_by_category[skill.category] = []
-        skills_by_category[skill.category].append(skill)
-    
-    education = Education.objects.all()
-    
-    context = {
-        'about_section': about_section,
-        'skills_by_category': skills_by_category,
-        'education': education,
-    }
-    return render(request, 'portfolio/about.html', context)
 
 def projects(request):
     """Projects listing page"""
@@ -106,12 +88,35 @@ def project_detail(request, slug):
 
 def experience(request):
     """Experience page view"""
-    experiences = Experience.objects.all()
-    education = Education.objects.all()
+    experiences = Experience.objects.all().order_by('-is_current', 'order')
+    education = Education.objects.all().order_by('order')
+    
+    # Add skill categories for the Skills section
+    skill_categories = {
+        'programming': Skill.objects.filter(category='programming').order_by('order'),
+        'frontend': Skill.objects.filter(category='frontend').order_by('order'),
+        'backend': Skill.objects.filter(category='backend').order_by('order'),
+        'database': Skill.objects.filter(category='database').order_by('order'),
+        'devops': Skill.objects.filter(category='devops').order_by('order'),
+        'other': Skill.objects.filter(category='other').order_by('order'),
+    }
+    
+    try:
+        about = AboutSection.objects.first()
+    except AboutSection.DoesNotExist:
+        about = None
+    
+    # Debug info
+    print("Experiences count:", experiences.count())
+    print("Education count:", education.count())
+    print("Skills count:", sum(len(skills) for skills in skill_categories.values()))
     
     context = {
         'experiences': experiences,
         'education': education,
+        'skill_categories': skill_categories,
+        'about': about,
+        'debug': True,  # Enable debug mode in template
     }
     return render(request, 'portfolio/experience.html', context)
 
@@ -138,7 +143,8 @@ def contact(request):
     return render(request, 'portfolio/contact.html', context)
 
 # Admin/Dashboard Views
-@staff_member_required
+@staff_member_required   # <-- Only admin/staff can access
+@login_required           # <-- Must be logged in
 def dashboard(request):
     """Admin dashboard view"""
     stats = {
@@ -160,6 +166,7 @@ def dashboard(request):
     }
     return render(request, 'portfolio/dashboard.html', context)
 
+@login_required           # <-- Must be logged in
 @staff_member_required
 def edit_about(request):
     """Edit about section"""
@@ -183,6 +190,7 @@ def edit_about(request):
     }
     return render(request, 'portfolio/edit_about.html', context)
 
+@login_required           # <-- Must be logged in
 @staff_member_required
 def manage_projects(request):
     """Manage projects view"""
@@ -192,7 +200,7 @@ def manage_projects(request):
         'projects': projects,
     }
     return render(request, 'portfolio/manage_projects.html', context)
-
+@login_required           # <-- Must be logged in
 @staff_member_required
 def edit_project(request, project_id=None):
     """Add/Edit project"""
@@ -216,6 +224,7 @@ def edit_project(request, project_id=None):
     }
     return render(request, 'portfolio/edit_project.html', context)
 
+@login_required           # <-- Must be logged in
 @staff_member_required
 def manage_skills(request):
     """Manage skills view"""
@@ -226,6 +235,7 @@ def manage_skills(request):
     }
     return render(request, 'portfolio/manage_skills.html', context)
 
+@login_required           # <-- Must be logged in
 @staff_member_required
 def edit_skill(request, skill_id=None):
     """Add/Edit skill"""
@@ -249,6 +259,7 @@ def edit_skill(request, skill_id=None):
     }
     return render(request, 'portfolio/edit_skill.html', context)
 
+@login_required           # <-- Must be logged in
 @staff_member_required
 def manage_messages(request):
     """Manage contact messages"""
@@ -264,6 +275,7 @@ def manage_messages(request):
     }
     return render(request, 'portfolio/manage_messages.html', context)
 
+@login_required           # <-- Must be logged in
 @staff_member_required
 def mark_message_read(request, message_id):
     """Mark message as read/unread"""
@@ -278,6 +290,7 @@ def mark_message_read(request, message_id):
     return redirect('portfolio:manage_messages')
 
 # API Views for AJAX
+@login_required           # <-- Must be logged in
 @staff_member_required
 def delete_project(request, project_id):
     """Delete project via AJAX"""
@@ -287,6 +300,7 @@ def delete_project(request, project_id):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
+@login_required           # <-- Must be logged in
 @staff_member_required
 def delete_skill(request, skill_id):
     """Delete skill via AJAX"""

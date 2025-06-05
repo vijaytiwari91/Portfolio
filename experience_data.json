@@ -1,0 +1,163 @@
+{
+    "experiences": [
+        {
+            "id": 3,
+            "position": "Data Analyst",
+            "company_name": "TMI Group",
+            "experience_type": "work",
+            "experience_type_display": "Work Experience",
+            "description": "Responsible for building visually appealing dashboards using PowerBi, Maintaining all the necessary data in Excel and creating summaries and reports.",
+            "start_date": "2024-10-15",
+            "end_date": null,
+            "company_url": "https://tmigroup.in/",
+            "location": "Hyderabad, India",
+            "is_current": true,
+            "order": 1,
+            "duration": "Oct 2024 - Present",
+            "technologies_used": [
+                {
+                    "id": 10,
+                    "name": "Power BI",
+                    "icon": "fas fa-chart-line"
+                },
+                {
+                    "id": 18,
+                    "name": "Dashboard Development",
+                    "icon": "fas fa-tachometer-alt"
+                },
+                {
+                    "id": 11,
+                    "name": "MS Excel",
+                    "icon": "fas fa-file-excel"
+                },
+                {
+                    "id": 15,
+                    "name": "Data Visualization",
+                    "icon": "fas fa-chart-bar"
+                },
+                {
+                    "id": 16,
+                    "name": "Statistical Analysis",
+                    "icon": "fas fa-calculator"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "position": "Data Analyst",
+            "company_name": "Referenceglobe",
+            "experience_type": "work",
+            "experience_type_display": "Work Experience",
+            "description": "\u2022 Conducted data cleaning and preprocessing using MySQL queries and Excel\n\u2022 Performed quality analysis of system products to ensure they meet high standards and requirements\n\u2022 Assisted the development team in performing system health checks and verifying system functionality\n\u2022 Provided effective technical support and troubleshooting, resolving issues promptly to maintain smooth CRM operations\n\u2022 Delivered product demos to Heads of Departments (HODs), faculty, and Training and Placement Officers (TPOs)\n\u2022 Gathered client requirements and coordinated with the development team to ensure needs are understood and addressed\n\u2022 Used Excel to clean and prepare data before uploading it into the system\n\u2022 Provided reports and visualizations through dashboards when additional insights or metrics were required\n\u2022 Contributed to company efficiency through streamlined data management, improved system functionality, and enhanced user satisfaction",
+            "start_date": "2024-02-01",
+            "end_date": "2024-09-30",
+            "company_url": "",
+            "location": "India",
+            "is_current": false,
+            "order": 2,
+            "duration": "Feb 2024 - Sep 2024",
+            "technologies_used": [
+                {
+                    "id": 2,
+                    "name": "MySQL",
+                    "icon": "fas fa-database"
+                },
+                {
+                    "id": 10,
+                    "name": "Power BI",
+                    "icon": "fas fa-chart-line"
+                },
+                {
+                    "id": 11,
+                    "name": "MS Excel",
+                    "icon": "fas fa-file-excel"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "position": "Data Analyst Intern",
+            "company_name": "Skill Lync",
+            "experience_type": "internship",
+            "experience_type_display": "Internship",
+            "description": "\u2022 Conducted research, analysis, and preparation of project reports for retail e-commerce projects\n\u2022 Analyzed retail sales data transactions of e-commerce company with comprehensive data analysis\n\u2022 Delivered interactive reports and dashboards for monitoring KPIs including Products, Orders, Sales, Profit, Quantity, Loss\n\u2022 Created visualizations on Weekly, Monthly, Quarterly, and Yearly basis for business insights\n\u2022 Successfully completed certification program in Data Analyst and Data Science internship\n\u2022 Gained hands-on experience with real-world data analysis projects and industry best practices",
+            "start_date": "2023-09-01",
+            "end_date": "2023-11-30",
+            "company_url": "",
+            "location": "Chennai, India",
+            "is_current": false,
+            "order": 3,
+            "duration": "Sep 2023 - Nov 2023",
+            "technologies_used": [
+                {
+                    "id": 9,
+                    "name": "Tableau",
+                    "icon": "fas fa-chart-pie"
+                },
+                {
+                    "id": 11,
+                    "name": "MS Excel",
+                    "icon": "fas fa-file-excel"
+                },
+                {
+                    "id": 1,
+                    "name": "Python",
+                    "icon": "fab fa-python"
+                }
+            ]
+        }
+    ],
+    "education": [
+        {
+            "id": 1,
+            "institution_name": "Swami Vivekanand University",
+            "degree": "Bachelor of Computer Science Engineering",
+            "degree_type": "bachelor",
+            "degree_type_display": "Bachelor's Degree",
+            "field_of_study": "Computer Science Engineering",
+            "description": "Comprehensive study of computer science fundamentals, programming, data structures, algorithms, and software engineering principles.",
+            "gpa": "78%",
+            "start_date": "2019-06-01",
+            "end_date": "2023-05-31",
+            "institution_url": "",
+            "location": "India",
+            "is_current": false,
+            "order": 1,
+            "duration": "Jun 2019 - May 2023"
+        },
+        {
+            "id": 2,
+            "institution_name": "Govt Nehru High Secondary School",
+            "degree": "Intermediate \u2013 12th Standard",
+            "degree_type": "other",
+            "degree_type_display": "Other",
+            "field_of_study": "Science",
+            "description": "Higher Secondary Education with focus on Science subjects.",
+            "gpa": "70%",
+            "start_date": "2018-06-01",
+            "end_date": "2019-03-31",
+            "institution_url": "",
+            "location": "India",
+            "is_current": false,
+            "order": 2,
+            "duration": "Jun 2018 - Mar 2019"
+        },
+        {
+            "id": 3,
+            "institution_name": "Govt Chandan Devi High School",
+            "degree": "SSLC \u2013 10th Standard",
+            "degree_type": "other",
+            "degree_type_display": "Other",
+            "field_of_study": "General",
+            "description": "Secondary School Leaving Certificate.",
+            "gpa": "72%",
+            "start_date": "2017-06-01",
+            "end_date": "2018-03-31",
+            "institution_url": "",
+            "location": "India",
+            "is_current": false,
+            "order": 3,
+            "duration": "Jun 2017 - Mar 2018"
+        }
+    ]
+}

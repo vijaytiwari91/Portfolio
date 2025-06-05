@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%-xgp$6g20=ask@3=_#3_n2r31bh5nlhs10h@6jo8w1^+c2km+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
 
 # Application definition
@@ -46,8 +46,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'portfolio.middleware.AdminSecurityMiddleware',  # Re-enabled - working with custom decorators
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'portfolio.middleware.SecurityHeadersMiddleware',  # Custom security headers
 ]
 
 ROOT_URLCONF = 'portfolio_site.urls'
@@ -131,24 +133,42 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Login URLs
-LOGIN_URL = '/admin/login/'
+LOGIN_URL = '/auth/login/'  # Our custom login page
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Email Configuration
+# Email Configuration for Gmail OTP Password Reset
 # For development, we'll use console backend (prints emails to console)
+# Comment out the line below and uncomment Gmail settings when ready for production
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# For production, use SMTP (uncomment and configure these):
+# Gmail SMTP Configuration (uncomment for production)
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'  # or your email provider's SMTP server
+# EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your-email@gmail.com'
-# EMAIL_HOST_PASSWORD = 'your-app-password'  # Use app-specific password for Gmail
-# DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
+# EMAIL_HOST_USER = 'your-admin-email@gmail.com'  # Replace with your Gmail
+# EMAIL_HOST_PASSWORD = 'your-app-password'        # Use Gmail App Password
+# DEFAULT_FROM_EMAIL = 'Portfolio Admin <your-admin-email@gmail.com>'
 
-# For testing with a real email service like Gmail:
+# Security Settings
+SECURE_SSL_REDIRECT = False  # Set to True in production with HTTPS
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Session Security
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 3600  # 1 hour
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# CSRF Protection
+CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
+CSRF_COOKIE_HTTPONLY = True
 # 1. Go to Google Account settings
 # 2. Enable 2-factor authentication
 # 3. Generate an "App Password" for Django

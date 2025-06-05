@@ -1,0 +1,140 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block title %}Manage Skills - {{ block.super }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<style>
+    .skill-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: transform 0.2s;
+    }
+
+    .skill-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .toggle-btn {
+        cursor: pointer;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+    .featured {
+        background: #4CAF50;
+        color: white;
+    }
+
+    .not-featured {
+        background: #ccc;
+        color: #666;
+    }
+
+    .category-section {
+        margin-bottom: 30px;
+    }
+
+    .category-title {
+        color: #2196F3;
+        border-bottom: 2px solid #2196F3;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="manage-skills">
+    <h1>Manage Skills</h1>
+    <p class="help">Organize your skills and set which ones to feature on your portfolio.</p>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <a href="/admin/portfolio/skill/add/" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add New Skill
+            </a>
+            <a href="{% url 'portfolio:dashboard_home' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    {% regroup skills by category as skills_by_category %}
+    {% for category in skills_by_category %}
+    <div class="category-section">
+        <h2 class="category-title">{{ category.grouper|title }}</h2>
+
+        <div class="row">
+            {% for skill in category.list %}
+            <div class="col-md-6 col-lg-4">
+                <div class="skill-card">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <div class="d-flex align-items-center">
+                                {% if skill.icon %}
+                                <i class="{{ skill.icon }} fa-2x text-primary mr-3"></i>
+                                {% else %}
+                                <i class="fas fa-code fa-2x text-muted mr-3"></i>
+                                {% endif %}
+                                <div>
+                                    <h5 class="mb-1">{{ skill.name }}</h5>
+                                    <small class="text-muted">Order: {{ skill.order }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 text-right">
+                            <button
+                                class="toggle-btn {% if skill.is_featured %}featured{% else %}not-featured{% endif %} mb-2"
+                                onclick="toggleFeatured({{ skill.id }}, this)">
+                                {% if skill.is_featured %}Featured{% else %}Normal{% endif %}
+                            </button>
+                            <br>
+                            <a href="/admin/portfolio/skill/{{ skill.id }}/change/"
+                                class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="skill-card text-center">
+        <h3>No skills added yet!</h3>
+        <p>Start by adding your technical skills.</p>
+        <a href="/admin/portfolio/skill/add/" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Add Your First Skill
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    function toggleFeatured(skillId, button) {
+        fetch(`/dashboard/skill/${skillId}/toggle-featured/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    button.textContent = data.is_featured ? 'Featured' : 'Normal';
+                    button.className = 'toggle-btn ' + (data.is_featured ? 'featured' : 'not-featured');
+                }
+            });
+    }
+</script>
+{% endblock %}

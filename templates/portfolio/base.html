@@ -35,14 +35,9 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                <ul class="navbar-nav ms-auto">                    <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
                             href="{% url 'portfolio:home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
-                            href="{% url 'portfolio:about' %}">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}"
@@ -56,16 +51,67 @@
                         <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
                             href="{% url 'portfolio:contact' %}">Contact</a>
                     </li>
-                    {% if user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link text-warning" href="{% url 'portfolio:dashboard' %}">
-                            <i class="fas fa-cog me-1"></i>Dashboard
-                        </a>
-                    </li>
-                    {% endif %}
                 </ul>
+
+                <!-- Admin Access - Separate from main navigation -->
+                <div class="d-flex align-items-center ms-3">
+                    {% if user.is_authenticated and user.is_staff %}
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="adminDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cog me-1"></i>Admin Panel
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                            <li>
+                                <h6 class="dropdown-header">
+                                    <i class="fas fa-user me-1"></i>{{ user.first_name|default:user.username }}
+                                </h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:dashboard_home' %}">
+                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:quick_edit_about' %}">
+                                    <i class="fas fa-user-edit me-2"></i>Edit About
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:manage_projects' %}">
+                                    <i class="fas fa-project-diagram me-2"></i>Manage Projects
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:manage_skills' %}">
+                                    <i class="fas fa-cogs me-2"></i>Manage Skills
+                                </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:admin_profile' %}">
+                                    <i class="fas fa-user-cog me-2"></i>Profile Settings
+                                </a></li>
+                            <li><a class="dropdown-item" href="/admin/">
+                                    <i class="fas fa-tools me-2"></i>Django Admin
+                                </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'portfolio:admin_logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'portfolio:admin_login' %}" class="btn btn-outline-secondary btn-sm"
+                        title="Admin Login">
+                        <i class="fas fa-key me-1"></i>Admin
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
+    </nav>
+    </ul>
+    </div>
+    </div>
     </nav>
 
     <!-- Messages -->
@@ -112,12 +158,9 @@
                     </div>
                     {% endif %}
                 </div>
-                <div class="col-md-6">
-                    <h5 class="fw-bold mb-3">Quick Links</h5>
+                <div class="col-md-6">                    <h5 class="fw-bold mb-3">Quick Links</h5>
                     <ul class="list-unstyled">
                         <li><a href="{% url 'portfolio:home' %}" class="text-light-50 text-decoration-none">Home</a>
-                        </li>
-                        <li><a href="{% url 'portfolio:about' %}" class="text-light-50 text-decoration-none">About</a>
                         </li>
                         <li><a href="{% url 'portfolio:projects' %}"
                                 class="text-light-50 text-decoration-none">Projects</a></li>

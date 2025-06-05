@@ -19,10 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from portfolio import auth_views as custom_auth_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('portfolio.urls')),
+    path('admin/', admin.site.urls),
     
     # Authentication URLs for password reset
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),

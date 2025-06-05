@@ -1,0 +1,208 @@
+{% extends 'admin/dashboard/base.html' %}
+{% load static %}
+
+{% block dashboard_title %}Portfolio Dashboard{% endblock %}
+
+{% block dashboard_extra_head %}
+<style>
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2196F3;
+    }
+
+    .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .quick-action-btn {
+        margin: 5px;
+        min-width: 200px;
+    }
+
+    .recent-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .recent-item:last-child {
+        border-bottom: none;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+    }
+
+    .badge-secondary {
+        background-color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+<!-- Quick Actions -->
+<div class="dashboard-card">
+    <h5 class="mb-3">
+        <i class="fas fa-bolt me-2 text-warning"></i>Quick Actions
+    </h5>
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'portfolio:quick_edit_about' %}" class="btn btn-primary quick-action-btn">
+                <i class="fas fa-user-edit me-2"></i>Edit About Section
+            </a>
+            <a href="/admin/portfolio/project/add/" class="btn btn-success quick-action-btn">
+                <i class="fas fa-plus me-2"></i>Add New Project
+            </a>
+            <a href="/admin/portfolio/skill/add/" class="btn btn-info quick-action-btn">
+                <i class="fas fa-plus me-2"></i>Add New Skill
+            </a>
+            <a href="{% url 'portfolio:manage_projects' %}" class="btn btn-warning quick-action-btn">
+                <i class="fas fa-tasks me-2"></i>Manage Projects
+            </a>
+            <a href="{% url 'portfolio:manage_skills' %}" class="btn btn-secondary quick-action-btn">
+                <i class="fas fa-cogs me-2"></i>Manage Skills
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-number">{{ total_projects }}</div>
+            <div class="stat-label">Total Projects</div>
+            <small class="text-muted">{{ featured_projects }} featured</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-number">{{ total_skills }}</div>
+            <div class="stat-label">Total Skills</div>
+            <small class="text-muted">{{ featured_skills }} featured</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-number">{{ total_experience }}</div>
+            <div class="stat-label">Experience Entries</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="dashboard-card text-center">
+            <div class="stat-number text-danger">{{ unread_messages }}</div>
+            <div class="stat-label">Unread Messages</div>
+            <a href="/admin/portfolio/contactmessage/" class="btn btn-sm btn-outline-primary mt-2">View All</a>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Content -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="dashboard-card">
+            <h5 class="mb-3">
+                <i class="fas fa-project-diagram me-2 text-primary"></i>Recent Projects
+            </h5>
+            {% for project in recent_projects %}
+            <div class="recent-item">
+                <strong>{{ project.title }}</strong>
+                <br>
+                <small class="text-muted">{{ project.project_type }} - {{ project.created_at|date:"M d, Y" }}</small>
+                <br>
+                <span class="badge badge-{{ project.is_featured|yesno:'success,secondary' }}">
+                    {{ project.is_featured|yesno:'Featured,Normal' }}
+                </span>
+            </div>
+            {% empty %}
+            <p class="text-muted">No projects yet. <a href="/admin/portfolio/project/add/">Add your first project</a>
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="dashboard-card">
+            <h5 class="mb-3">
+                <i class="fas fa-envelope me-2 text-info"></i>Unread Messages
+            </h5>
+            {% for message in recent_messages %}
+            <div class="recent-item">
+                <strong>{{ message.name }}</strong> - {{ message.subject }}
+                <br>
+                <small class="text-muted">{{ message.created_at|date:"M d, Y H:i" }}</small>
+                <br>
+                <button class="btn btn-sm btn-primary mt-1" onclick="markAsRead({{ message.id }})">
+                    <i class="fas fa-check me-1"></i>Mark as Read
+                </button>
+            </div>
+            {% empty %}
+            <p class="text-muted">No unread messages.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- About Section Status -->
+{% if about_section %}
+<div class="dashboard-card">
+    <h5 class="mb-3">
+        <i class="fas fa-user me-2 text-success"></i>About Section Status
+    </h5>
+    <div class="row">
+        <div class="col-md-8">
+            <p><strong>Title:</strong> {{ about_section.title }}</p>
+            <p><strong>Email:</strong> {{ about_section.email|default:"Not set" }}</p>
+            <p><strong>Location:</strong> {{ about_section.location|default:"Not set" }}</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'portfolio:quick_edit_about' %}" class="btn btn-primary">
+                <i class="fas fa-edit me-2"></i>Edit About Section
+            </a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="dashboard-card">
+    <h5 class="mb-3">
+        <i class="fas fa-exclamation-triangle me-2 text-warning"></i>About Section
+    </h5>
+    <p class="text-warning">About section not set up yet.</p>
+    <a href="{% url 'portfolio:quick_edit_about' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Set Up About Section
+    </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block dashboard_extra_js %}
+<script>
+    function markAsRead(messageId) {
+        DashboardUtils.confirmAction(
+            'Are you sure you want to mark this message as read?',
+            function () {
+                fetch(`/dashboard/message/${messageId}/mark-read/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            DashboardUtils.showAlert('Message marked as read!', 'success');
+                            setTimeout(() => location.reload(), 1000);
+                        }
+                    })
+                    .catch(error => {
+                        DashboardUtils.showAlert('Error marking message as read', 'danger');
+                    });
+            }
+        );
+    }
+</script>
+{% endblock %}

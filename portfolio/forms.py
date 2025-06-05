@@ -27,6 +27,25 @@ class AboutSectionForm(ModelForm):
             'resume_file': forms.FileInput(attrs={'class': 'form-control-file'}),
         }
 
+class QuickAboutForm(ModelForm):
+    """Quick form for editing essential About section fields"""
+    class Meta:
+        model = AboutSection
+        fields = [
+            'title', 'description', 'email', 'phone', 'location', 
+            'profile_image', 'linkedin_url', 'github_url'
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'linkedin_url': forms.URLInput(attrs={'class': 'form-control'}),
+            'github_url': forms.URLInput(attrs={'class': 'form-control'}),
+            'profile_image': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }
+
 class SkillForm(ModelForm):
     """Form for adding/editing skills"""
     class Meta:

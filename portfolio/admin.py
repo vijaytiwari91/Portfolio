@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 from .models import (
     AboutSection, Skill, Project, Experience, 
     Education, ContactMessage
@@ -7,15 +9,23 @@ from .models import (
 
 @admin.register(AboutSection)
 class AboutSectionAdmin(admin.ModelAdmin):
-    list_display = ['title', 'email', 'location', 'updated_at']
+    list_display = ['title', 'email', 'location', 'profile_image_preview', 'updated_at']
     search_fields = ['title', 'description', 'email']
-    readonly_fields = ['created_at', 'updated_at']
+    readonly_fields = ['created_at', 'updated_at', 'profile_image_preview']
+    
+    def profile_image_preview(self, obj):
+        if obj.profile_image:
+            return format_html(
+                '<img src="{}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />',
+                obj.profile_image.url
+            )
+        return "No image"
+    profile_image_preview.short_description = 'Profile Image'
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('title', 'description', 'profile_image')
-        }),
-        ('Contact Information', {
+            'fields': ('title', 'description', 'profile_image', 'profile_image_preview')
+        }),        ('Contact Information', {
             'fields': ('email', 'phone', 'location')
         }),
         ('Social Links', {
@@ -49,13 +59,22 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ['title', 'project_type', 'is_featured', 'is_published', 'order', 'created_at']
+    list_display = ['title', 'project_type', 'image_preview', 'is_featured', 'is_published', 'order', 'created_at']
     list_filter = ['project_type', 'is_featured', 'is_published', 'created_at']
     search_fields = ['title', 'description', 'short_description']
     list_editable = ['is_featured', 'is_published', 'order']
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ['technologies']
     ordering = ['-is_featured', 'order', '-created_at']
+    
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;" />',
+                obj.image.url
+            )
+        return "No image"
+    image_preview.short_description = 'Preview'
     
     fieldsets = (
         ('Basic Information', {
