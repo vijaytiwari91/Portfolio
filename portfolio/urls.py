@@ -8,8 +8,9 @@ app_name = 'portfolio'
 urlpatterns = [    # Public views
     path('', views.home, name='home'),
     path('projects/', views.projects, name='projects'),
-    path('project/<slug:slug>/', views.project_detail, name='project_detail'),
-    path('experience/', views.experience, name='experience'),    path('contact/', views.contact, name='contact'),
+    path('projects/<slug:slug>/', views.project_detail, name='project_detail'),
+    path('experience/', views.experience, name='experience'),
+    path('contact/', views.contact, name='contact'),
       # Authentication views
     path('admin/login/', auth_views.admin_login_view, name='admin_login'),
     path('auth/login/', auth_views.admin_login_view, name='auth_login'),  # Django LOGIN_URL

@@ -36,25 +36,28 @@
         <div class="container">
             {% if projects %}
             <div class="row g-4" id="projects-container">
-                {% for project in projects %}
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:'1' }}00">
+                {% for project in projects %} <div class="col-md-6 col-lg-4" data-aos="fade-up"
+                    data-aos-delay="{{ forloop.counter0|add:'1' }}00">
                     <div class="card h-100 shadow-sm">
                         <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ project.title }}</h5>
                             <p class="card-text">{{ project.short_description }}</p>
-                            <a href="{{ project.link }}" class="btn btn-primary" target="_blank">View Project</a>
+                            <a href="{% url 'portfolio:project_detail' project.slug %}" class="btn btn-primary">View
+                                Project</a>
+                            {% if project.github_url %}
                             <a href="{{ project.github_url }}" class="btn btn-secondary" target="_blank">View Code</a>
+                            {% endif %}
                         </div>
                         <div class="project-stats mb-3">
                             <div class="row text-center">
                                 <div class="col-6">
                                     <small class="text-muted d-block">Created</small>
-                                    <small class="fw-semibold">{{ pro.created_at|date:"M Y" }}</small>
+                                    <small class="fw-semibold">{{ project.created_at|date:"M Y" }}</small>
                                 </div>
                                 <div class="col-6">
                                     <small class="text-muted d-block">Updated</small>
-                                    <small class="fw-semibold">{{ pro.updated_at|date:"M Y" }}</small>
+                                    <small class="fw-semibold">{{ project.updated_at|date:"M Y" }}</small>
                                 </div>
                             </div>
                         </div>
