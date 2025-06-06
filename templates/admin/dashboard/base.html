@@ -1,0 +1,169 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}{% block dashboard_title %}Dashboard{% endblock %} - Portfolio Admin{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .dashboard-wrapper {
+        min-height: calc(100vh - 120px);
+        margin-top: 80px;
+        padding: 2rem 0;
+    }
+
+    .dashboard-header {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .session-indicator {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        z-index: 1030;
+        background: #28a745;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    .session-indicator.warning {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .session-indicator.danger {
+        background: #dc3545;
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            opacity: 0.8;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.8;
+        }
+    }
+</style>
+{% block dashboard_extra_head %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="container-fluid">
+        <!-- Session Status Indicator -->
+        <div class="session-indicator" id="sessionStatus">
+            <i class="fas fa-shield-alt me-1"></i>Secure Session Active
+        </div>
+
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-1">
+                        <i class="fas fa-tachometer-alt me-2 text-primary"></i>
+                        {% block dashboard_header_title %}Dashboard{% endblock %}
+                    </h1>
+                    <p class="text-muted mb-0">
+                        Welcome back, {{ user.first_name|default:user.username }}!
+                        <span class="text-primary">Last login: {{ user.last_login|date:"M d, Y H:i" }}</span>
+                    </p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'portfolio:home' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-eye me-1"></i>View Site
+                    </a>
+                    <a href="{% url 'portfolio:admin_profile' %}" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-user-cog me-1"></i>Profile
+                    </a>
+                    <a href="{% url 'portfolio:admin_logout' %}" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        {% block dashboard_content %}
+        <div class="row">
+            <div class="col-12">
+                <div class="dashboard-card">
+                    <h5>Dashboard Content</h5>
+                    <p class="text-muted">Override the dashboard_content block to add your content here.</p>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'js/dashboard.js' %}"></script>
+<script>
+    // Dashboard-specific JavaScript
+    document.addEventListener('DOMContentLoaded', function () {
+        // Update session status periodically
+        updateSessionStatus();
+        setInterval(updateSessionStatus, 60000); // Every minute
+
+        // Add tooltips to all elements with title attribute
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Auto-focus first input in forms
+        const firstInput = document.querySelector('form input, form textarea, form select');
+        if (firstInput) {
+            firstInput.focus();
+        }
+    }); function updateSessionStatus() {
+        const indicator = document.getElementById('sessionStatus');
+        const sessionTime = {{ request.session.get_expiry_age|default: 3600 | floatformat: 0
+    }} * 1000;
+    const warningTime = 10 * 60 * 1000; // 10 minutes
+
+    if (sessionTime < warningTime) {
+        indicator.className = 'session-indicator warning';
+        indicator.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Session Expiring Soon';
+    } else if (sessionTime < 5 * 60 * 1000) { // 5 minutes
+        indicator.className = 'session-indicator danger';
+        indicator.innerHTML = '<i class="fas fa-exclamation-circle me-1"></i>Session Expiring!';
+    }
+    }
+</script>
+{% block dashboard_extra_js %}{% endblock %}
+{% endblock %}

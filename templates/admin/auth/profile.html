@@ -1,0 +1,187 @@
+{% extends 'admin/dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Admin Profile - Portfolio{% endblock %}
+
+{% block dashboard_content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-user-cog me-2"></i>Admin Profile Settings
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                value="{{ user.first_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                value="{{ user.last_name }}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}"
+                            required>
+                        <small class="text-muted">Used for password reset OTP delivery</small>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="text-primary mb-3">
+                        <i class="fas fa-key me-2"></i>Change Password (Optional)
+                    </h6>
+
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="current_password" name="current_password">
+                        <small class="text-muted">Required only if changing password</small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="new_password" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="new_password" name="new_password"
+                                minlength="8">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="confirm_password" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                                minlength="8">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Save Changes
+                        </button>
+                        <a href="{% url 'portfolio:dashboard_home' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h6 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>Account Information
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <strong>Username:</strong><br>
+                    <span class="text-muted">{{ user.username }}</span>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Last Login:</strong><br>
+                    <span class="text-muted">
+                        {% if user.last_login %}
+                        {{ user.last_login|date:"M d, Y H:i" }}
+                        {% else %}
+                        Never
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Account Created:</strong><br>
+                    <span class="text-muted">{{ user.date_joined|date:"M d, Y" }}</span>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Permissions:</strong><br>
+                    <span class="badge bg-success">
+                        <i class="fas fa-shield-alt me-1"></i>Admin Access
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mt-3">
+            <div class="card-header bg-warning text-dark">
+                <h6 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Security Tips
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Use a strong password with mixed characters
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Keep your email address updated for OTP delivery
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Always logout when using shared computers
+                    </li>
+                    <li class="mb-0">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Change password regularly
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Password match validation
+    document.getElementById('confirm_password').addEventListener('input', function () {
+        const password = document.getElementById('new_password').value;
+        const confirmPassword = this.value;
+
+        if (password !== confirmPassword) {
+            this.setCustomValidity('Passwords do not match');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    document.getElementById('new_password').addEventListener('input', function () {
+        const confirmPassword = document.getElementById('confirm_password');
+        if (confirmPassword.value) {
+            confirmPassword.dispatchEvent(new Event('input'));
+        }
+    });
+
+    // Show password requirements if user starts typing new password
+    document.getElementById('new_password').addEventListener('focus', function () {
+        if (!document.getElementById('password-help')) {
+            const helpText = document.createElement('small');
+            helpText.id = 'password-help';
+            helpText.className = 'text-muted';
+            helpText.innerHTML = 'Password must be at least 8 characters long';
+            this.parentNode.appendChild(helpText);
+        }
+    });
+</script>
+{% endblock %}

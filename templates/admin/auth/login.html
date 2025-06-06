@@ -1,0 +1,171 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Admin Login - Portfolio{% endblock %}
+
+{% block extra_head %}
+<style>
+    .login-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 0;
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        padding: 3rem;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .login-header i {
+        font-size: 3rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+
+    .btn-login {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .forgot-password {
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .forgot-password a {
+        color: #667eea;
+        text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fas fa-shield-alt"></i>
+            <h2 class="h4 mb-0">Admin Access</h2>
+            <p class="text-muted">Secure login to portfolio dashboard</p>
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %} {% endif %}
+
+        <form method="post" action="{% url 'portfolio:admin_login' %}" id="loginForm" data-no-loading="true">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login" id="loginButton">
+                <i class="fas fa-sign-in-alt me-2"></i>Login
+            </button>
+        </form>
+
+        <div class="forgot-password">
+            <a href="{% url 'portfolio:password_reset_request' %}">
+                <i class="fas fa-key me-1"></i>Forgot Password?
+            </a>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="{% url 'portfolio:home' %}" class="text-muted">
+                <i class="fas fa-arrow-left me-1"></i>Back to Portfolio
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Auto-focus username field
+    document.getElementById('username').focus();
+
+    // Add some interactive feedback
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function () {
+            this.parentElement.classList.add('focused');
+        });
+
+        input.addEventListener('blur', function () {
+            this.parentElement.classList.remove('focused');
+        });
+    });    // Handle login form submission properly
+    const loginForm = document.getElementById('loginForm');
+    const loginButton = document.getElementById('loginButton');
+
+    loginForm.addEventListener('submit', function (e) {
+        const originalText = loginButton.innerHTML;
+
+        // Only show loading if form is valid
+        if (this.checkValidity()) {
+            loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Signing in...';
+            loginButton.disabled = true;
+
+            // Reset button after 15 seconds as fallback (in case something goes wrong)
+            setTimeout(function () {
+                loginButton.innerHTML = originalText;
+                loginButton.disabled = false;
+            }, 15000);
+        }
+    });
+
+    // Handle any form validation errors
+    loginForm.addEventListener('invalid', function (e) {
+        e.preventDefault();
+        const originalText = loginButton.innerHTML;
+        loginButton.innerHTML = originalText;
+        loginButton.disabled = false;
+    }, true);
+</script>
+{% endblock %}

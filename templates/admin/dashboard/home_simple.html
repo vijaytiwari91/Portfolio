@@ -1,0 +1,54 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Dashboard Home - Test{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1>Portfolio Dashboard</h1>
+            <p>Welcome, {{ user.first_name|default:user.username }}!</p>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Projects</h5>
+                            <h2 class="text-primary">{{ total_projects|default:0 }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Skills</h5>
+                            <h2 class="text-success">{{ total_skills|default:0 }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Experience</h5>
+                            <h2 class="text-info">{{ total_experience|default:0 }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Messages</h5>
+                            <h2 class="text-warning">{{ unread_messages|default:0 }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'portfolio:home' %}" class="btn btn-outline-primary">View Site</a>
+                <a href="{% url 'portfolio:admin_logout' %}" class="btn btn-outline-danger">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

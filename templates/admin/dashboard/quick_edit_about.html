@@ -1,0 +1,181 @@
+{% extends 'admin/base_site.html' %}
+{% load static %}
+
+{% block title %}Quick Edit About - {{ block.super }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<style>
+    .edit-form {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin: 20px 0;
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .form-section:last-child {
+        border-bottom: none;
+    }
+
+    .section-title {
+        color: #2196F3;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .current-image {
+        max-width: 150px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .btn-save {
+        background: #4CAF50;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        margin-left: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="quick-edit">
+    <h1>Quick Edit About Section</h1>
+    <p class="help">Update your personal information and key details quickly.</p>
+
+    <div class="edit-form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h3 class="section-title">Basic Information</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.title.id_for_label }}">Name/Title:</label>
+                            {{ form.title }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.location.id_for_label }}">Location:</label>
+                            {{ form.location }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Description:</label>
+                    {{ form.description }}
+                    <small class="form-text text-muted">Brief description about yourself</small>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="form-section">
+                <h3 class="section-title">Contact Information</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">Email:</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.phone.id_for_label }}">Phone:</label>
+                            {{ form.phone }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="form-section">
+                <h3 class="section-title">Social Links</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.linkedin_url.id_for_label }}">LinkedIn URL:</label>
+                            {{ form.linkedin_url }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ form.github_url.id_for_label }}">GitHub URL:</label>
+                            {{ form.github_url }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Image -->
+            <div class="form-section">
+                <h3 class="section-title">Profile Image</h3>
+                {% if about.profile_image %}
+                <div class="form-group">
+                    <label>Current Image:</label><br>
+                    <img src="{{ about.profile_image.url }}" alt="Current profile" class="current-image">
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="{{ form.profile_image.id_for_label }}">
+                        {% if about.profile_image %}Update Profile Image:{% else %}Upload Profile Image:{% endif %}
+                    </label>
+                    {{ form.profile_image }}
+                    <small class="form-text text-muted">Choose a new image to replace the current one</small>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-save">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="{% url 'portfolio:dashboard_home' %}" class="btn btn-secondary btn-cancel">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="edit-form">
+        <h3 class="section-title">Quick Actions</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="{% url 'portfolio:home' %}" class="btn btn-info btn-block" target="_blank">
+                    <i class="fas fa-eye"></i> Preview Website
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/admin/portfolio/aboutsection/" class="btn btn-warning btn-block">
+                    <i class="fas fa-cog"></i> Advanced Edit
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'portfolio:dashboard_home' %}" class="btn btn-secondary btn-block">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vijay's Portfolio{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                            href="{% url 'portfolio:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}"
+                            href="{% url 'portfolio:projects' %}">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'experience' %}active{% endif %}"
+                            href="{% url 'portfolio:experience' %}">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
+                            href="{% url 'portfolio:contact' %}">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- Admin Access - Separate from main navigation -->
+                <div class="d-flex align-items-center ms-3">
+                    {% if user.is_authenticated and user.is_staff %}
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="adminDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cog me-1"></i>Admin Panel
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                            <li>
+                                <h6 class="dropdown-header">
+                                    <i class="fas fa-user me-1"></i>{{ user.first_name|default:user.username }}
+                                </h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:dashboard_home' %}">
+                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:quick_edit_about' %}">
+                                    <i class="fas fa-user-edit me-2"></i>Edit About
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:manage_projects' %}">
+                                    <i class="fas fa-project-diagram me-2"></i>Manage Projects
+                                </a></li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:manage_skills' %}">
+                                    <i class="fas fa-cogs me-2"></i>Manage Skills
+                                </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'portfolio:admin_profile' %}">
+                                    <i class="fas fa-user-cog me-2"></i>Profile Settings
+                                </a></li>
+                            <li><a class="dropdown-item" href="/admin/">
+                                    <i class="fas fa-tools me-2"></i>Django Admin
+                                </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'portfolio:admin_logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'portfolio:admin_login' %}" class="btn btn-outline-secondary btn-sm"
+                        title="Admin Login">
+                        <i class="fas fa-key me-1"></i>Admin
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    </ul>
+    </div>
+    </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="container mt-5 pt-4">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-3">Vijay's Portfolio</h5>
+                    <p class="mb-3">Passionate about Data Analytics and creating innovative solutions with modern
+                        technologies.</p>
+                    {% if about %}
+                    <div class="contact-info mb-3">
+                        {% if about.email %}
+                        <div class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>
+                            <a href="mailto:{{ about.email }}" class="text-light text-decoration-none">
+                                {{ about.email }}</a>
+                        </div>
+                        {% endif %}
+                        {% if about.phone %}
+                        <div class="mb-2">
+                            <i class="fas fa-phone me-2"></i>
+                            <a href="tel:{{ about.phone }}" class="text-light text-decoration-none me-2">
+                                {{ about.phone }}</a>
+                            <a href="https://wa.me/{{ about.phone|cut:'+' }}" class="btn btn-success btn-sm"
+                                target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="social-links">
+                        {% if about.github_url %}
+                        <a href="{{ about.github_url }}" class="text-light me-3" target="_blank">
+                            <i class="fab fa-github fa-lg"></i>
+                        </a>
+                        {% endif %}
+                        {% if about.linkedin_url %}
+                        <a href="{{ about.linkedin_url }}" class="text-light me-3" target="_blank">
+                            <i class="fab fa-linkedin fa-lg"></i>
+                        </a>
+                        {% endif %}
+                        {% if about.website_url %}
+                        <a href="{{ about.website_url }}" class="text-light me-3" target="_blank">
+                            <i class="fas fa-globe fa-lg"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'portfolio:home' %}" class="text-light-50 text-decoration-none">Home</a>
+                        </li>
+                        <li><a href="{% url 'portfolio:projects' %}"
+                                class="text-light-50 text-decoration-none">Projects</a></li>
+                        <li><a href="{% url 'portfolio:contact' %}"
+                                class="text-light-50 text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; {% now "Y" %} Vijay. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0"></p>
+                </div>
+            </div>
+        </div>
+    </footer> <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>
