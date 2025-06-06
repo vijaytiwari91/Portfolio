@@ -15,7 +15,8 @@ from .models import (
 )
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.conf import settings
+from .forms import ContactForm
 
 from .forms import (
     AboutSectionForm, SkillForm, ProjectForm, 
@@ -123,46 +124,49 @@ def experience(request):
     }
     return render(request, 'portfolio/experience.html', context)
 
-def contact(request):
-    """Contact page with form"""
     
+def contact(request):
+    """
+    Simple email sending using Django's send_mail function
+    """
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
+            # Get form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            
+            # Prepare email content
+            email_subject = f"Contact Form: {subject}"
+            email_message = f"""
+            New contact form submission:
+            
+            Name: {name}
+            Email: {email}
+            Subject: {subject}
+            
+            Message:
+            {message}
+            """
+            
             try:
-
-                name = form.cleaned_data['name']
-                email = form.cleaned_data['email']
-                subject = form.cleaned_data['subject']
-                message = form.cleaned_data['message']
-                full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
-
-                print("Sending email with subject:", subject)
-                print("Full message content:", full_message)
+                # Send email
                 send_mail(
-                subject=subject,
-                message=full_message,
-                from_email=email,  # or DEFAULT_FROM_EMAIL
-                recipient_list=['gvedhanth123@gmail.com'],  # Where you receive emails
-                fail_silently=False,
+                    subject=email_subject,
+                    message=email_message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,  # Your email
+                    recipient_list=['gvsvp0918@gmail.com'],   # Where to send
+                    fail_silently=False,
                 )
+                
+                messages.success(request, 'Thank you! Your message has been sent successfully.')
 
-                # Use a transaction with a timeout to prevent database locks
-                with transaction.atomic():
-                    contact_msg = form.save(commit=False)
-                    contact_msg.save()
-                    
-                    # Close database connections to release locks
-                    for conn in connections.all():
-                        conn.close()
-                        
-                    messages.success(request, 'Thank you! Your message has been sent successfully.')
-                    return redirect('portfolio:contact')
                 
             except Exception as e:
-                # If there's a database error, show an error message
-                print(e)
-                messages.error(request, f'Sorry, we could not send your message. Please try again later.')
+                messages.error(request, f'Sorry, there was an error sending your message: {str(e)}')
+    
     else:
         form = ContactForm()
     
@@ -171,32 +175,13 @@ def contact(request):
     except AboutSection.DoesNotExist:
         about = None
     
-    # Add hardcoded FAQs until a model is created
-    faqs = [
-        {
-            'question': 'What services do you offer?',
-            'answer': 'I specialize in full-stack web development, data analysis, and machine learning solutions. My services include custom web application development, data visualization, predictive modeling, and technical consulting.'
-        },
-        {
-            'question': 'How much do your services cost?',
-            'answer': 'Project costs vary based on complexity, timeline, and specific requirements. I offer competitive rates and would be happy to provide a detailed quote after discussing your project needs.'
-        },        
-        {
-            'question': 'What is your typical project timeline?',
-            'answer': 'Timeline depends on project scope and complexity. Small websites typically take 2-4 weeks, while complex web applications may take 2-6 months. I\'ll provide a detailed timeline during our initial consultation.'
-        },
-        {
-            'question': 'Do you offer ongoing maintenance and support?',
-            'answer': 'Yes, I offer maintenance packages and ongoing support for all completed projects. This ensures your application remains secure, up-to-date, and functioning optimally.'
-        },
-    ]
-    
     context = {
         'form': form,
-        'about': about,
-        'faqs': faqs,
+        'about': about
     }
+
     return render(request, 'portfolio/contact.html', context)
+
 
 # Admin/Dashboard Views
 @staff_member_required   # <-- Only admin/staff can access

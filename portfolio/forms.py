@@ -143,26 +143,21 @@ class ContactForm(ModelForm):
         fields = ['name', 'email', 'subject', 'message']
         widgets = {
             'name': forms.TextInput(attrs={
-                'class': 'form-control',
                 'required': True,
                 'minlength': '2',
                 'maxlength': '100',
             }),
             'email': forms.EmailInput(attrs={
-                'class': 'form-control',
                 'required': True,
                 'maxlength': '100',
             }),
             'subject': forms.TextInput(attrs={
-                'class': 'form-control',
                 'required': True,
                 'minlength': '5',
                 'maxlength': '200',
             }),
             'message': forms.Textarea(attrs={
-                'class': 'form-control',
                 'rows': 5,
-                'style': 'height: 150px',
                 'required': True,
                 'minlength': '10',
             }),
