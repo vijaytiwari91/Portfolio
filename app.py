@@ -3,7 +3,7 @@ import base64
 
 # Page Configuration
 st.set_page_config(
-    page_title="Vijay Tiwari - Data Analyst Portfolio",
+    page_title="{{ about.title }} - Data Analyst Portfolio",
     page_icon="📊",
     layout="wide"
 )
@@ -170,7 +170,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Header Section
-st.markdown('<p class="title-text">VIJAY TIWARI</p>', unsafe_allow_html=True)
+st.markdown('<p class="title-text">{{ about.title }}</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle-text">Data Analyst with Strong Analytical Skills and Passion for Data Analytics</p>', unsafe_allow_html=True)
 
 # Adding profile image
@@ -184,11 +184,11 @@ col1, col2, col3 = st.columns([1,1,1])
 with col1:
     st.markdown("### 📞 Contact")
     st.write("**Phone:** 9131735630")
-    st.write("**Email:** Vijaydataanalyst91@gmail.com")
+    st.write("**Email:** {{ about.email }}")
 
 with col2:
     st.markdown("### 🌐 Social")
-    st.markdown("[GitHub](https://github.com/vijaytiwari91)")
+    st.markdown("[GitHub]({{ about.github_url }})")
     st.markdown("[LinkedIn](Profile Link)")
 
 with col3:
@@ -310,6 +310,6 @@ st.markdown("""
 st.markdown("---")
 st.markdown("""
 <p style='text-align: center; color: #7f8c8d;'>
-    © 2024 Vijay Tiwari - Data Analyst Portfolio
+    © 2024 {{ about.title }} - Data Analyst Portfolio
 </p>
 """, unsafe_allow_html=True)

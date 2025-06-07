@@ -1,7 +1,7 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 
-{% block title %}{{ project.title }} - Vijay's Portfolio{% endblock %}
+{% block title %}{{ project.title }} - {{ about.title }}'s Portfolio{% endblock %}
 
 {% block content %}
 
@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ project.title }} - Vijay's Portfolio</title>
+    <title>{{ project.title }} - {{ about.title }}'s Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -36,12 +36,12 @@
                             <li class="breadcrumb-item active text-white" aria-current="page">{{ project.title }}</li>
                         </ol>
                     </nav>
-                    
+
                     <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">{{ project.title }}</h1>
                     <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
                         {{ project.short_description }}
                     </p>
-                    
+
                     <div class="project-badges mb-3">
                         {% if project.is_featured %}
                         <span class="badge bg-warning text-dark me-2">
@@ -49,7 +49,7 @@
                         </span>
                         {% endif %}
                     </div>
-                    
+
                     <div class="project-links" data-aos="fade-up" data-aos-delay="200">
                         {% if project.live_url %}
                         <a href="{{ project.live_url }}" target="_blank" class="btn btn-light btn-lg me-3 mb-2">
@@ -65,10 +65,9 @@
                 </div>
                 <div class="col-lg-4 d-none d-lg-flex justify-content-end align-items-center">
                     {% if project.image %}
-                    <img src="{{ project.image.url }}" alt="{{ project.title }}" 
-                         class="img-fluid rounded-circle bg-white p-2" 
-                         style="max-width: 200px; max-height: 200px; object-fit: cover;"
-                         data-aos="zoom-in">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}"
+                        class="img-fluid rounded-circle bg-white p-2"
+                        style="max-width: 200px; max-height: 200px; object-fit: cover;" data-aos="zoom-in">
                     {% else %}
                     <div class="rounded-circle bg-white p-3" data-aos="zoom-in">
                         <i class="fas fa-project-diagram fa-4x text-primary"></i>
@@ -91,16 +90,18 @@
                             <div class="content" data-aos="fade-up" data-aos-delay="100">
                                 {{ project.description|linebreaks }}
                             </div>
-                            
+
                             <!-- Project Screenshot -->
                             {% if project.image %}
                             <div class="project-image my-4 text-center" data-aos="fade-up" data-aos-delay="150">
-                                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded-3 shadow" style="max-width: 100%;">
+                                <img src="{{ project.image.url }}" alt="{{ project.title }}"
+                                    class="img-fluid rounded-3 shadow" style="max-width: 100%;">
                             </div>
                             {% endif %}
-                            
+
                             <!-- Project Links Button Group -->
-                            <div class="project-links mt-4 d-flex flex-wrap gap-2" data-aos="fade-up" data-aos-delay="200">
+                            <div class="project-links mt-4 d-flex flex-wrap gap-2" data-aos="fade-up"
+                                data-aos-delay="200">
                                 {% if project.live_url %}
                                 <a href="{{ project.live_url }}" target="_blank" class="btn btn-primary">
                                     <i class="fas fa-external-link-alt me-2"></i>View Live Project
@@ -118,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Right Column - Project Details -->
                 <div class="col-lg-4">
                     <!-- Project Info -->
@@ -133,21 +134,21 @@
                                 </h6>
                                 <p class="mb-0">{{ project.get_project_type_display }}</p>
                             </div>
-                            
+
                             <div class="info-item mb-3">
                                 <h6 class="fw-semibold text-primary mb-1">
                                     <i class="fas fa-calendar-plus me-2"></i>Created
                                 </h6>
                                 <p class="mb-0">{{ project.created_at|date:"F j, Y" }}</p>
                             </div>
-                            
+
                             <div class="info-item mb-3">
                                 <h6 class="fw-semibold text-primary mb-1">
                                     <i class="fas fa-calendar-check me-2"></i>Last Updated
                                 </h6>
                                 <p class="mb-0">{{ project.updated_at|date:"F j, Y" }}</p>
                             </div>
-                            
+
                             <!-- Technologies Used -->
                             <div class="info-item">
                                 <h6 class="fw-semibold text-primary mb-3">
@@ -168,7 +169,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Related Projects -->
                     {% if related_projects %}
                     <div class="card shadow-sm" data-aos="fade-left" data-aos-delay="200">
@@ -178,23 +179,24 @@
                         <div class="card-body p-3">
                             <div class="list-group list-group-flush">
                                 {% for related in related_projects %}
-                                <a href="{% url 'portfolio:project_detail' related.slug %}" 
-                                   class="list-group-item list-group-item-action border-0 py-3">
+                                <a href="{% url 'portfolio:project_detail' related.slug %}"
+                                    class="list-group-item list-group-item-action border-0 py-3">
                                     <div class="d-flex align-items-center">
                                         {% if related.image %}
                                         <div class="flex-shrink-0 me-3">
-                                            <img src="{{ related.image.url }}" alt="{{ related.title }}" 
-                                                 class="rounded" style="width: 48px; height: 48px; object-fit: cover;">
+                                            <img src="{{ related.image.url }}" alt="{{ related.title }}" class="rounded"
+                                                style="width: 48px; height: 48px; object-fit: cover;">
                                         </div>
                                         {% else %}
-                                        <div class="flex-shrink-0 me-3 bg-light rounded d-flex align-items-center justify-content-center" 
-                                             style="width: 48px; height: 48px;">
+                                        <div class="flex-shrink-0 me-3 bg-light rounded d-flex align-items-center justify-content-center"
+                                            style="width: 48px; height: 48px;">
                                             <i class="fas fa-project-diagram text-primary"></i>
                                         </div>
                                         {% endif %}
                                         <div>
                                             <h6 class="mb-0">{{ related.title }}</h6>
-                                            <small class="text-muted">{{ related.short_description|truncatewords:10 }}</small>
+                                            <small class="text-muted">{{ related.short_description|truncatewords:10
+                                                }}</small>
                                         </div>
                                     </div>
                                 </a>

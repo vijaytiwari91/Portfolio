@@ -4,7 +4,7 @@
 ## Contact Information
 - **Phone:** 9131735630
 - **Email:** Vijaydataanalyst91@gmail.com
-- **GitHub:** https://github.com/vijaytiwari91
+- **GitHub:** {{about.github_url}}
 - **LinkedIn:** [Profile Link]
 - **Portfolio:** Skill-Lync Portfolio
 - **Location:** Hyderabad

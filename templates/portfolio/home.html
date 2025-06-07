@@ -1,7 +1,7 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
 
-{% block title %}Home - Vijay's Portfolio{% endblock %}
+{% block title %}Home - {{ about.title }}'s Portfolio{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -52,7 +52,7 @@
             </div>
             <div class="col-lg-6 text-center">
                 {% if about.profile_image %}
-                <img src="{{ about.profile_image.url }}" alt="Vijay"
+                <img src="{{ about.profile_image.url }}" alt="{{ about.title }}"
                     class="img-fluid rounded-circle shadow-lg animate__animated animate__fadeInRight"
                     style="max-width: 400px; width: 100%;">
                 {% else %}

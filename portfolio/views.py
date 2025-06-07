@@ -157,7 +157,7 @@ def contact(request):
                     subject=email_subject,
                     message=email_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,  # Your email
-                    recipient_list=['vijaydataanalyst91@gmail.com'],   # Where to send
+                    recipient_list=[about.email],   # Where to send
                     fail_silently=False,
                 )
                 
