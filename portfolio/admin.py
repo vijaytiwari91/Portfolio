@@ -62,7 +62,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'project_type', 'image_preview', 'is_featured', 'is_published', 'order', 'created_at']
     list_filter = ['project_type', 'is_featured', 'is_published', 'created_at']
     search_fields = ['title', 'description', 'short_description']
-    list_editable = ['is_featured', 'is_published', 'order']v
+    list_editable = ['is_featured', 'is_published', 'order']
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ['technologies']
     ordering = ['-is_featured', 'order', '-created_at']
