@@ -62,7 +62,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'project_type', 'image_preview', 'is_featured', 'is_published', 'order', 'created_at']
     list_filter = ['project_type', 'is_featured', 'is_published', 'created_at']
     search_fields = ['title', 'description', 'short_description']
-    list_editable = ['is_featured', 'is_published', 'order']
+    list_editable = ['is_featured', 'is_published', 'order']v
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ['technologies']
     ordering = ['-is_featured', 'order', '-created_at']
@@ -175,7 +175,25 @@ class ContactMessageAdmin(admin.ModelAdmin):
         else:
             return []
 
-# Custom admin site header
-admin.site.site_header = "Vijay's Portfolio Admin"
-admin.site.site_title = "Portfolio Admin"
+# Custom admin site header - using a function to get the name from the database
+def update_admin_headers():
+    try:
+        # Try to get the About section from the database
+        about = AboutSection.objects.first()
+        if about:
+            # If about section exists, use the title from the database
+            admin.site.site_header = f"{about.title}'s Portfolio Admin"
+            admin.site.site_title = f"{about.title}'s Portfolio"
+        else:
+            # Fallback if no AboutSection exists
+            admin.site.site_header = "Portfolio Admin"
+            admin.site.site_title = "Portfolio Admin"
+    except:
+        # Fallback in case of any errors (like during migrations)
+        admin.site.site_header = "Portfolio Admin"
+        admin.site.site_title = "Portfolio Admin"
+
 admin.site.index_title = "Welcome to Portfolio Administration"
+
+# We need to call this function only after the database is ready
+# This is done through the ready() method in the AppConfig
